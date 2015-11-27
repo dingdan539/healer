@@ -7,6 +7,6 @@ if __name__ == "__main__":
     #app = Flask(__name__)
     config = load_config_auto()
     #app.config.from_object(config)
-
+    print 'good'
     print config.ENV
     print fb.get_name()
