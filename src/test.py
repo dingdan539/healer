@@ -1,7 +1,16 @@
 # -*- coding: UTF-8 -*-
 from sqlalchemy import *
 from sqlalchemy.orm import *
-from common.db.op import *
+import os, sys
+if __name__ == '__main__':
+    print __file__
+    print os.path.abspath(__file__)
+    print os.path.dirname(os.path.abspath(__file__))
+    print os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    mod_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.append(mod_path)
+    from src.common.db.op import *
 
 #DbOp('dd')
 
