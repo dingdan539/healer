@@ -1,0 +1,29 @@
+# -*- coding:utf-8 -*-
+import time
+import threading
+
+
+def singleton(cls, *args, **kw):
+    instances = {}
+    threadlock = threading.Lock()
+
+    def _singleton(tag):
+        threadlock.acquire()
+        if tag not in instances:
+            instances[tag] = cls(tag, *args, **kw)
+        else:
+            pass
+        threadlock.release()
+        return instances[tag]
+    return _singleton
+
+
+def run_time(func):
+    """记录函数运行时间"""
+    def wrapper(*args, **kwargs):
+        print 'call %s():' % func.__name__
+        start_time = time.time()
+        myfun = func(*args, **kwargs)
+        print "@%.3fs" % (time.time() - start_time)
+        return myfun
+    return wrapper
