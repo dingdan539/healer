@@ -1,12 +1,17 @@
 # -*- coding:utf-8 -*-
 
+import sys
 from config import *
-import function.basic as fb
+
+
+def main_load():
+    from src.common.db.op import *
 
 if __name__ == "__main__":
 
     config = load_config_auto()
 
-    print 'good'
-    print config.ENV
-    print fb.get_name()
+    ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    sys.path.append(ROOT_PATH)
+    main_load()

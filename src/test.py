@@ -1,33 +1,24 @@
-# -*- coding: UTF-8 -*-
-from sqlalchemy import *
-from sqlalchemy.orm import *
-import os, sys
-if __name__ == '__main__':
-    print __file__
-    print os.path.abspath(__file__)
-    print os.path.dirname(os.path.abspath(__file__))
-    print os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# -*- coding:utf-8 -*-
 
-    mod_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(mod_path)
-    from src.common.db.op import *
+import sys
+import pprint
+from config import *
+import function.basic as fb
 
-#DbOp('dd')
+if __name__ == "__main__":
+    ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.append(ROOT_PATH)
+    from src.common.db import op
 
-# import function.decorator as fd
-# import time
-#
-#
-# @fd.run_time
-# def test():
-#     for i in xrange(3):
-#         print i
-#         time.sleep(1)
-#
-# test()
-# engine = create_engine('mysql+mysqldb://root:@localhost:3306/cost')
-# metadata = MetaData(engine)
-# users_table = Table('users', metadata, Column('id', Integer, primary_key=True),
-#     Column('name', String(40)),
-#     Column('email', String(120)))
-# users_table.create()
+    db = op.CreateDb('healer')
+    db.search()
+    #
+    # config = load_config_auto()
+    #
+    #
+    # from src.common.db.op import DbOp
+    #
+    # dbargs = fb.get_profix_property(config, 'DB')
+    # dbargs['DEBUG'] = config.DEBUG
+    #
+    # db_res = DbOp('haohao', **dbargs)

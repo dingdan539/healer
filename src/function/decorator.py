@@ -3,14 +3,14 @@ import time
 import threading
 
 
-def singleton(cls, *args, **kw):
+def singleton(cls):
     instances = {}
     threadlock = threading.Lock()
 
-    def _singleton(tag):
+    def _singleton(tag, *args, **kwargs):
         threadlock.acquire()
         if tag not in instances:
-            instances[tag] = cls(tag, *args, **kw)
+            instances[tag] = cls(tag, *args, **kwargs)
         else:
             pass
         threadlock.release()

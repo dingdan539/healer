@@ -13,7 +13,7 @@ class Father(object):
     pass
 
 
-class Db(object):
+class DbSqlalchemy(object):
     __engine = None
     __session = None
 
@@ -26,9 +26,8 @@ class Db(object):
         debug = kwargs['DEBUG']
 
         uri = db_sqlalchemy + '://' + db_user + ':' + db_pwd + '@' + db_server + ':' + db_port + '/?charset=utf8'
-
         self.__engine = create_engine(uri, echo=debug)
-        self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.engine))
+        self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.__engine))
 
     @property
     def engine(self):
