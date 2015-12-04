@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 dbmaps = {
     'healer': {
-        'prefix': 'DB_'
+        'prefix': 'DB_',
+        'tables': ['apple', 'log']
     }
 }
