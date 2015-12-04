@@ -11,7 +11,7 @@ if __name__ == "__main__":
     from src.common.db import op
 
     db = op.CreateDb('healer')
-    db.search()
+    print db.search()
     #
     # config = load_config_auto()
     #
