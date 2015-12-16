@@ -4,8 +4,9 @@ from father import *
 from ...function import basic as fb
 from ...config.db.databases import dbmaps
 from ...config import load_config_auto
-from sqlalchemy import Table
+from sqlalchemy import Table, text, or_
 from ...config.db import models
+
 
 @singleton
 class DbOp(object):
@@ -36,6 +37,30 @@ class CreateDb(InitCreateDb):
     __engine = None
     __session = None
 
+    error_map = {
+        0: 'succ',
+        1: 'db is empty in config'
+    }
+
+    @staticmethod
+    def __default_args(**kwargs):
+        params = dict()
+        params['tb_name'] = kwargs.get('tb_name', '')
+        params['field'] = kwargs.get('field', [])
+        params['where'] = kwargs.get('where', {})
+        params['or'] = kwargs.get('or', {})
+        params['in'] = kwargs.get('in', {})
+        params['order'] = kwargs.get('order', {})
+        params['limit'] = kwargs.get('limit', [])
+        return params
+
+    @staticmethod
+    def __get_columns(cs):
+        data = []
+        for i in cs:
+            data.append(i.__dict__)
+        return data
+
     def __init__(self, db_name):
         super(CreateDb, self).__init__(db_name)
         self.__db_name = db_name
@@ -59,24 +84,183 @@ class CreateDb(InitCreateDb):
             else:
                 return False
         except Exception, data:
-            print 'mymy'
             print data
-            print type(data)
 
-    def __default_args(self, **kwargs):
-        canshu = dict()
-        canshu['tb_name'] = kwargs.get('tb_name', '')
-        canshu['field'] = kwargs.get('field', [])
-        canshu['where'] = kwargs.get('where', {})
-        canshu['or'] = kwargs.get('or', {})
-        canshu['in'] = kwargs.get('in', {})
-        canshu['order'] = kwargs.get('order', {})
-        canshu['limit'] = kwargs.get('limit', [])
-        return canshu
+    def __output(self, code, data=[]):
+        return {'code': code, 'msg': self.error_map[code], 'data': data}
 
     def search(self, **kwargs):
-        canshu = self.__default_args(**kwargs)
-        if dbmaps[self.__db_name]['tables']
-        #users_table = Table('log', Base.metadata, autoload_with=self.__engine)
-        result = self.__session.query(models.Log.message).filter_by(message='qusi2').all()
-        return result
+        """
+        Args:
+            tb_name - str
+            field   - [] - ['name', 'tag', 'datatime'] 选取的字段
+            where   - {} - {'id >=': 55}
+            or      - {} - {'id >=': 55, 'name like': '%x%'}
+            in      - {} - {'id': [1, 2, 5, 66]}
+            order   - {} - {'name': 'desc'}
+            limit   - [] - [5] or [1, 5]  单个表示limit(5) 2个表示limit(5).offset(1)
+        Returns:
+            {'msg': 'succ', 'code': 0, 'data': []} data 是数据
+        """
+        params = self.__default_args(**kwargs)
+        tb_name = params['tb_name']
+        if tb_name not in dbmaps[self.__db_name]['tables']:
+            return self.__output(1)
+
+        # users_table = Table(tb_name, Base.metadata, autoload_with=self.__engine)
+        # column_dicts = [i.name for i in users_table.columns]
+
+        # 动态加载表结构
+        t = getattr(models, tb_name.capitalize())
+
+        # field过滤
+        p_f = params['field']
+        field = [t] if len(p_f) == 0 else [getattr(t, i) for i in p_f]
+        result = self.__session.query(*field)
+
+        # where过滤
+        p_w = params['where']
+        if p_w:
+            for key in p_w:
+                cc, k = key.split(' ')
+                if k in ['>', '>=', '<', '<=', '=', '!=']:
+                    result = result.filter(text(''.join([key, "'", str(p_w[key]), "'"])))
+                elif k == 'like':
+                    result = result.filter(getattr(getattr(t, cc), k)(p_w[key]))
+
+        # or过滤
+        p_o = params['or']
+        if p_o:
+            pas = []
+            for key in p_o:
+                cc, k = key.split(' ')
+                if k in ['>', '>=', '<', '<=', '=', '!=']:
+                    pas.append(text(''.join([key, "'", str(p_o[key]), "'"])))
+
+                elif k == 'like':
+                    pas.append(getattr(getattr(t, cc), k)(p_o[key]))
+
+            result = result.filter(or_(*pas))
+
+        # in过滤
+        p_i = params['in']
+        if p_i:
+            for cc in p_i:
+                result = result.filter(getattr(getattr(t, cc), 'in_')(p_i[cc]))
+
+        # order过滤
+        p_order = params['order']
+        if p_order:
+            for key in p_order:
+                result = result.order_by(text(key+' '+str(p_order[key])))
+
+        # limit过滤
+        p_l = params['limit']
+        if len(p_l) == 1:
+            result = result.limit(p_l[0])
+        elif len(p_l) == 2:
+            result = result.limit(p_l[1]).offset(p_l[0])
+
+        res = result.all()
+
+        # 返回处理好的数据
+        data = []
+        if len(p_f) == 0:
+            data = self.__get_columns(res)
+        else:
+            for dd in res:
+                tmp = {}
+                for i, value in enumerate(dd):
+                    tmp[p_f[i]] = value
+                data.append(tmp)
+        return self.__output(0, data)
+
+    def update(self, **kwargs):
+        """
+        Args:
+            tb_name - str
+            field   - {} - {'name': 'dd'}
+            where   - {} - {'id >=': 55}
+
+        Returns:
+            {'msg': 'succ', 'code': 0, 'data': 3} data 是更新的条数
+        """
+        p_f = kwargs.get('field', {})
+        p_w = kwargs.get('where', {})
+
+        tb_name = kwargs.get('tb_name', '')
+        if tb_name not in dbmaps[self.__db_name]['tables']:
+            return self.__output(1)
+
+        # 动态加载表结构
+        t = getattr(models, tb_name.capitalize())
+        result = self.__session.query(t)
+
+        if p_w:
+            for key in p_w:
+                cc, k = key.split(' ')
+                if k in ['>', '>=', '<', '<=', '=', '!=']:
+                    result = result.filter(text(''.join([key, "'", str(p_w[key]), "'"])))
+                elif k == 'like':
+                    result = result.filter(getattr(getattr(t, cc), k)(p_w[key]))
+
+        result = result.update(p_f, synchronize_session=False)
+
+        return self.__output(0, data=result)
+
+    def insert(self, **kwargs):
+        """
+        Args:
+            field - {} or [{},{}] | {'name': 'dd'} or [{'name': 'dd'}, {'name': 'dd2', 'tag': 'tom'}]
+
+        Returns:
+            None
+        """
+        p_f = kwargs.get('field', {})
+
+        tb_name = kwargs.get('tb_name', '')
+        if tb_name not in dbmaps[self.__db_name]['tables']:
+            return self.__output(1)
+
+        # 动态加载表结构
+        t = getattr(models, tb_name.capitalize())
+
+        with self.__session.begin():
+            if isinstance(p_f, dict):
+                self.__session.add(t(**p_f))
+            elif isinstance(p_f, list):
+                lists = []
+                for i in p_f:
+                    lists.append(t(**i))
+                self.__session.add_all(lists)
+
+    def delete(self, **kwargs):
+        """
+        Args:
+            tb_name - str
+            where   - {} - {'id >=': 55}
+
+        Returns:
+            {'msg': 'succ', 'code': 0, 'data': 3} data 是删除的条数
+        """
+        p_w = kwargs.get('where', {})
+
+        tb_name = kwargs.get('tb_name', '')
+        if tb_name not in dbmaps[self.__db_name]['tables']:
+            return self.__output(1)
+
+        # 动态加载表结构
+        t = getattr(models, tb_name.capitalize())
+        result = self.__session.query(t)
+
+        if p_w:
+            for key in p_w:
+                cc, k = key.split(' ')
+                if k in ['>', '>=', '<', '<=', '=', '!=']:
+                    result = result.filter(text(''.join([key, "'", str(p_w[key]), "'"])))
+                elif k == 'like':
+                    result = result.filter(getattr(getattr(t, cc), k)(p_w[key]))
+
+        result = result.delete(synchronize_session=False)
+
+        return self.__output(0, data=result)

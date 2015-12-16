@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import DeferredReflection
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -29,6 +30,8 @@ class DbSqlalchemy(object):
         uri = db_sqlalchemy + '://' + db_user + ':' + db_pwd + '@' + db_server + ':' + db_port + '/' \
             + db_name + '?charset=utf8'
         self.__engine = create_engine(uri, echo=debug)
+        # autoload 的表初始化
+        DeferredReflection.prepare(self.__engine)
         self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.__engine))
 
     @property

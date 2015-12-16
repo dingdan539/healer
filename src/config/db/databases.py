@@ -2,6 +2,6 @@
 dbmaps = {
     'healer': {
         'prefix': 'DB_',
-        'tables': ['apple', 'log']
+        'tables': ['apple', 'cao', 'log']
     }
 }

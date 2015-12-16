@@ -17,3 +17,7 @@ class Apple(father.Base, father.Father):
     id = Column(Integer, primary_key=True)
     wtf = Column(String(255), nullable=False)
     ddtime = Column(DateTime, default=lambda: datetime.now(), nullable=False)
+
+
+class Cao(father.DeferredReflection, father.Base, father.Father):
+    __tablename__ = 'cao'

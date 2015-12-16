@@ -10,8 +10,34 @@ if __name__ == "__main__":
     sys.path.append(ROOT_PATH)
     from src.common.db import op
 
+
     db = op.CreateDb('healer')
-    print db.search()
+    #db.init_table()
+    # a = {
+    #     'tb_name': 'cao',
+    #     'field': ['caonima', 'name', 'id'],
+    #     'or': {
+    #     },
+    #     'order': {
+    #         'id': 'desc'
+    #     },
+    #     'limit': [1, 2]
+    # }
+    # mms = db.search(**a)
+
+    b = {
+        'tb_name': 'cao',
+        'field': {
+            'name': 'e4',
+            'caonima': 'e4'
+        },
+        'where': {
+            'name like': 'z%'
+        }
+    }
+    mms = db.delete(**b)
+    print mms
+    #pprint.pprint(db.search())
     #
     # config = load_config_auto()
     #
