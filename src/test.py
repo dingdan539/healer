@@ -9,17 +9,19 @@ if __name__ == "__main__":
     ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.append(ROOT_PATH)
     from src.common.db import op
+    from src.common.mq import q
 
-
-    db = op.CreateDb('asset')
-    #db.init_table()
-    a = {
-        'tb_name': 'server',
-        'where': {
-            'ip =': '10.4.1.155'
-        }
-    }
-    print db.search(**a)
+    a = q.Q('aa_test')
+    a.send('dingdan')
+    # db = op.CreateDb('asset')
+    # #db.init_table()
+    # a = {
+    #     'tb_name': 'server',
+    #     'where': {
+    #         'ip =': '10.4.1.155'
+    #     }
+    # }
+    # print db.search(**a)
 
     # a = {
     #     'tb_name': 'cao',
