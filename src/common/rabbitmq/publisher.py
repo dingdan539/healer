@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import pika
 from ...config import load_config_auto
+from ...function import basic as fb
 from ...config.q.qmaps import qmaps
 
 
@@ -9,9 +10,10 @@ class Publisher(object):
     __channel = None
 
     def __init__(self, queue_name):
+        prefix = qmaps[queue_name]['prefix']
         cfg = load_config_auto()
-        self.dbargs = fb.get_profix_property(cfg, self.prefix)
-        
+        qargs = fb.get_profix_property(cfg, prefix)
+
         credentials = pika.PlainCredentials('opsdev', 'opsdev')
         self.__connection = pika.BlockingConnection(pika.ConnectionParameters('10.4.1.226', 5672, '/', credentials))
         self.__channel = self.__connection.channel()

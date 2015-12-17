@@ -11,17 +11,8 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import publisher
 
-    a = publisher.Publisher()
-    a.send('dingdan')
-    # db = op.CreateDb('asset')
-    # #db.init_table()
-    # a = {
-    #     'tb_name': 'server',
-    #     'where': {
-    #         'ip =': '10.4.1.155'
-    #     }
-    # }
-    # print db.search(**a)
+    a = publisher.Publisher('aa_test_queue')
+    # a.send('dingdan')
 
     # a = {
     #     'tb_name': 'cao',
