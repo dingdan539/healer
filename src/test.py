@@ -11,7 +11,7 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import publisher
 
-    a = publisher.Publisher('aa_test')
+    a = publisher.Publisher()
     a.send('dingdan')
     # db = op.CreateDb('asset')
     # #db.init_table()
