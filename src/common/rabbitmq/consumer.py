@@ -19,6 +19,9 @@ class Consumer(object):
         self.__channel.start_consuming()
 
     @staticmethod
-    def callback(self, ch, method, properties, body):
+    def callback(ch, method, properties, body):
+        print ch
+        print method
+        print properties
         print " [x] Received %r" % (body,)
 
