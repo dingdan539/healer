@@ -12,13 +12,5 @@ class Q(object):
         self.__channel = self.__connection.channel()
         self.__channel.queue_declare(queue='aa_test')
 
-    def get(self, msg):
-        self.__channel.basic_consume(self.callback, queue='aa_test', no_ack=True)
-
-        print ' [*] Waiting for messages. To exit press CTRL+C'
-        self.__channel.start_consuming()
-
-    @staticmethod
-    def callback(self, ch, method, properties, body):
-        print " [x] Received %r" % (body,)
-
+    def send(self, msg):
+        print self.__channel.basic_publish(exchange='', routing_key='aa_test', body=msg)
