@@ -10,3 +10,9 @@ class DeployConfig(Config):
     DB_PWD = 'opsdev_1haodian'
     DB_SERVER = 'masterdb.oms.yihaodian.com.cn'
     DB_PORT = '3306'
+
+    RMQ_HOST = '10.4.1.226'
+    RMQ_PORT = 5672
+    RMQ_USER = 'opsdev'
+    RMQ_PWD = 'opsdev'
+    RMQ_VHOST = '/'
