@@ -24,9 +24,10 @@ class DbOp(object):
 
 class InitCreateDb(object):
     def __init__(self, db_name):
-        prefix = dbmaps[db_name]['prefix']
+        self.prefix = dbmaps[db_name]['prefix']
+        self.tables = dbmaps[db_name]['tables']
         cfg = load_config_auto()
-        self.dbargs = fb.get_profix_property(cfg, prefix)
+        self.dbargs = fb.get_profix_property(cfg, self.prefix)
         self.dbargs['DB_NAME'] = db_name
         self.dbargs['DEBUG'] = cfg.DEBUG
 
@@ -67,19 +68,24 @@ class CreateDb(InitCreateDb):
         self.__instance = DbOp(db_name, **self.dbargs)
         self.__engine = self.__instance.get_engine()
         self.__session = self.__instance.get_session()
+        if models.DeferredReflection in getattr(models, self.__db_name.capitalize()).__bases__:
+            getattr(models, self.__db_name.capitalize()).prepare(self.__engine)
 
     def init_table(self):
-        Base.metadata.create_all(bind=self.__engine)
+        tbs = []
+        for i in self.tables:
+            tbs.append(getattr(getattr(models, i.capitalize()), '__table__'))
+        getattr(models, self.__db_name.capitalize()).metadata.create_all(bind=self.__engine, tables=tbs)
 
     def execute(self, sql):
         try:
-            prefix = sql[:sql.index(' ')].lower()
+            my_prefix = sql[:sql.index(' ')].lower()
             res = self.__session.execute(sql)
-            if prefix == 'select':
+            if my_prefix == 'select':
                 return res.fetchall()
-            elif prefix in ['update', 'delete']:
+            elif my_prefix in ['update', 'delete']:
                 return res.rowcount
-            elif prefix == 'insert':
+            elif my_prefix == 'insert':
                 return 'insert go'
             else:
                 return False

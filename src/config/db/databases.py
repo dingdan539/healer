@@ -2,6 +2,10 @@
 dbmaps = {
     'healer': {
         'prefix': 'DB_',
-        'tables': ['apple', 'cao', 'log']
+        'tables': ['apple', 'log']
+    },
+    'asset': {
+        'prefix': 'DB_',
+        'tables': ['server']
     }
 }

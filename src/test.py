@@ -11,8 +11,16 @@ if __name__ == "__main__":
     from src.common.db import op
 
 
-    db = op.CreateDb('healer')
+    db = op.CreateDb('asset')
     #db.init_table()
+    a = {
+        'tb_name': 'server',
+        'where': {
+            'ip =': '10.4.1.155'
+        }
+    }
+    print db.search(**a)
+
     # a = {
     #     'tb_name': 'cao',
     #     'field': ['caonima', 'name', 'id'],
@@ -25,18 +33,18 @@ if __name__ == "__main__":
     # }
     # mms = db.search(**a)
 
-    b = {
-        'tb_name': 'cao',
-        'field': {
-            'name': 'e4',
-            'caonima': 'e4'
-        },
-        'where': {
-            'name like': 'z%'
-        }
-    }
-    mms = db.delete(**b)
-    print mms
+    # b = {
+    #     'tb_name': 'cao',
+    #     'field': {
+    #         'name': 'e4',
+    #         'caonima': 'e4'
+    #     },
+    #     'where': {
+    #         'name like': 'z%'
+    #     }
+    # }
+    # mms = db.insert(**b)
+    # print mms
     #pprint.pprint(db.search())
     #
     # config = load_config_auto()
