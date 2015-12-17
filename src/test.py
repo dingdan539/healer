@@ -12,6 +12,7 @@ if __name__ == "__main__":
 
 
     db = op.CreateDb('asset')
+    
     #db.init_table()
     a = {
         'tb_name': 'server',
