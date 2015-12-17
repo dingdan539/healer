@@ -17,4 +17,4 @@ class Q(object):
         self.__channel.queue_declare(queue='aa_test')
 
     def send(self, msg):
-        print self.__channel.basic_publish(exchange='', routing_key='hello', body=msg)
+        print self.__channel.basic_publish(exchange='', routing_key='aa_test', body=msg)
