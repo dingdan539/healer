@@ -2,7 +2,7 @@
 import pika
 
 
-class Q(object):
+class Consumer(object):
     __connection = None
     __channel = None
 
@@ -12,7 +12,7 @@ class Q(object):
         self.__channel = self.__connection.channel()
         self.__channel.queue_declare(queue='aa_test')
 
-    def get(self, msg):
+    def get(self):
         self.__channel.basic_consume(self.callback, queue='aa_test', no_ack=True)
 
         print ' [*] Waiting for messages. To exit press CTRL+C'

@@ -9,9 +9,9 @@ if __name__ == "__main__":
     ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.append(ROOT_PATH)
     from src.common.db import op
-    from src.common.mq import q
+    from src.common.rabbitmq import publisher
 
-    a = q.Q('aa_test')
+    a = publisher.Q('aa_test')
     a.send('dingdan')
     # db = op.CreateDb('asset')
     # #db.init_table()

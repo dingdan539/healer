@@ -2,7 +2,7 @@
 import pika
 
 
-class Q(object):
+class Publisher(object):
     __connection = None
     __channel = None
 
