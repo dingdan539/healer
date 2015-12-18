@@ -18,8 +18,6 @@ class DbSqlalchemy(object):
         prefix = kwargs['PREFIX']
         db_name = kwargs['DB_NAME']
         debug = kwargs['DEBUG']
-        print 111111111111111111111111111111111
-        print db_name
         sqlalchemy = kwargs[prefix+'SQLALCHEMY']
         user = kwargs[prefix+'USER']
         pwd = kwargs[prefix+'PWD']
@@ -28,6 +26,7 @@ class DbSqlalchemy(object):
 
         uri = sqlalchemy + '://' + user + ':' + pwd + '@' + server + ':' + port + '/' \
             + db_name + '?charset=utf8'
+        print uri
         self.__engine = create_engine(uri, echo=debug)
         self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.__engine))
 
