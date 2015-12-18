@@ -8,6 +8,8 @@ class Consumer(InitMq):
         self._channel.queue_declare(queue=queue_name, durable=True)
 
     def receive(self, fun):
-        self._channel.basic_consume(fun, queue=self._queue_name, no_ack=True)
+        def my_fun(aa, bb, cc, dd):
+            fun(dd)
+        self._channel.basic_consume(my_fun, queue=self._queue_name, no_ack=True)
         print "alery in "
         self._channel.start_consuming()

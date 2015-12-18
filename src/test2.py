@@ -11,8 +11,8 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import consumer
 
-    def call_back(aa, bb, cc, msg):
-        print msg + '-qusi'
+    def call_back(body):
+        print body + '-qusi2'
 
     a = consumer.Consumer('aa_test_queue')
     a.receive(call_back)
