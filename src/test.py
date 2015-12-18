@@ -12,7 +12,7 @@ if __name__ == "__main__":
     from src.common.rabbitmq import publisher
 
     a = publisher.Publisher('aa_test_queue')
-    #a.send('dingdan')
+    a.send('dingdan')
     # db = op.CreateDb('healer')
     # a = {
     #     'tb_name': 'log'
