@@ -15,6 +15,7 @@ class Consumer(InitMq):
     @staticmethod
     def __callback(ch, method, properties, body):
         print body
+        print Consumer.callback
 
     def gogo(self):
         pass
