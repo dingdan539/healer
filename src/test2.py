@@ -19,7 +19,8 @@ if __name__ == "__main__":
         b = {
             'tb_name': 'apple',
             'field': {
-                'wtf': body
+                'wtf': body,
+                'ddtime': '2015-12-18 14:41:23'
             }
         }
         db.insert(**b)
