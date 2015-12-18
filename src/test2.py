@@ -14,7 +14,7 @@ if __name__ == "__main__":
     def call_back(msg):
         print msg + '-qusi'
 
-    a = consumer.Consumer('aa_test_queue', call_back())
+    a = consumer.Consumer('aa_test_queue', call_back)
     a.receive()
     # db = op.CreateDb('asset')
     # #db.init_table()
