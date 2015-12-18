@@ -5,8 +5,8 @@ from ...config.q.qmaps import qmaps
 
 
 class InitMq(object):
-    __connection = None
-    __channel = None
+    _connection = None
+    _channel = None
 
     def __init__(self, queue_name):
         prefix = qmaps[queue_name]['prefix']
@@ -19,5 +19,5 @@ class InitMq(object):
         vhost = qargs[prefix+'VHOST']
 
         credentials = pika.PlainCredentials(user, pwd)
-        self.__connection = pika.BlockingConnection(pika.ConnectionParameters(host, port, vhost, credentials))
-        self.__channel = self.__connection.channel()
+        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host, port, vhost, credentials))
+        self._channel = self._connection.channel()
