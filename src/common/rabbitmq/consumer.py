@@ -14,11 +14,11 @@ class Consumer(InitMq):
 
     @staticmethod
     def __callback(ch, method, properties, body):
-        Consumer.callback(body)
+        print body
 
     def gogo(self):
         pass
 
     def receive(self):
-        self._channel.basic_consume(Consumer.__callback, queue=self._queue_name, no_ack=True)
+        self._channel.basic_consume(self.__callback, queue=self._queue_name, no_ack=True)
         self._channel.start_consuming()
