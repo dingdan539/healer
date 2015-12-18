@@ -22,11 +22,9 @@ class DbSqlalchemy(object):
         user = kwargs[prefix+'USER']
         pwd = kwargs[prefix+'PWD']
         server = kwargs[prefix+'SERVER']
-        port = kwargs[prefix+'PORT']
+        port = str(kwargs[prefix+'PORT'])
 
         uri = sqlalchemy + '://' + user + ':' + pwd + '@' + server + ':' + port + '/' + db_name + '?charset=utf8'
-        print uri
-        exit(0)
         self.__engine = create_engine(uri, echo=debug)
         self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.__engine))
 
