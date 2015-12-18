@@ -3,17 +3,22 @@ from .father import InitMq
 
 
 class Consumer(InitMq):
-    queue_name = None
-
-    def __init__(self, queue_name):
-        self.queue_name = queue_name
+    def __init__(self, queue_name, cb_fun):
         super(Consumer, self).__init__(queue_name)
         self._channel.queue_declare(queue=queue_name, durable=True)
+        Consumer.callback = cb_fun
 
     @staticmethod
-    def callback(body):
-        print body
+    def callback(self, msg):
+        print msg
+
+    @staticmethod
+    def __callback(ch, method, properties, body):
+        Consumer.callback(body)
+
+    def gogo(self):
+        pass
 
     def receive(self):
-        self._channel.basic_consume(self.callback, queue=self.queue_name, no_ack=True)
+        self._channel.basic_consume(self.__callback, queue=self._queue_name, no_ack=True)
         self._channel.start_consuming()
