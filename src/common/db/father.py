@@ -15,6 +15,7 @@ class DbSqlalchemy(object):
     __session = None
 
     def __init__(self, **kwargs):
+        print kwargs
         prefix = kwargs['PREFIX']
         db_name = kwargs['DB_NAME']
         debug = kwargs['DEBUG']
@@ -24,7 +25,7 @@ class DbSqlalchemy(object):
         pwd = kwargs[prefix+'PWD']
         server = kwargs[prefix+'SERVER']
         port = kwargs[prefix+'PORT']
-        print db_name
+
         uri = sqlalchemy + '://' + user + ':' + pwd + '@' + server + ':' + port + '/' \
             + db_name + '?charset=utf8'
         self.__engine = create_engine(uri, echo=debug)
