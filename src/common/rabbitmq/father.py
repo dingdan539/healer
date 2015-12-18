@@ -7,8 +7,10 @@ from ...config.q.qmaps import qmaps
 class InitMq(object):
     _connection = None
     _channel = None
+    _queue_name = None
 
     def __init__(self, queue_name):
+        self._queue_name = queue_name
         prefix = qmaps[queue_name]['prefix']
         cfg = load_config_auto()
         qargs = fb.get_profix_property(cfg, prefix)
