@@ -11,8 +11,8 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import consumer
 
-    a = consumer.Consumer()
-    a.get()
+    a = consumer.Consumer('aa_test_queue')
+    a.receive()
     # db = op.CreateDb('asset')
     # #db.init_table()
     # a = {

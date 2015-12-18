@@ -12,20 +12,13 @@ if __name__ == "__main__":
     from src.common.rabbitmq import publisher
 
     a = publisher.Publisher('aa_test_queue')
-    # a.send('dingdan')
-
+    a.send('dingdan')
+    # db = op.CreateDb('healer')
     # a = {
-    #     'tb_name': 'cao',
-    #     'field': ['caonima', 'name', 'id'],
-    #     'or': {
-    #     },
-    #     'order': {
-    #         'id': 'desc'
-    #     },
-    #     'limit': [1, 2]
+    #     'tb_name': 'log'
     # }
     # mms = db.search(**a)
-
+    # print mms
     # b = {
     #     'tb_name': 'cao',
     #     'field': {

@@ -15,15 +15,17 @@ class DbSqlalchemy(object):
     __session = None
 
     def __init__(self, **kwargs):
-        db_sqlalchemy = kwargs['DB_SQLALCHEMY']
-        db_user = kwargs['DB_USER']
-        db_pwd = kwargs['DB_PWD']
-        db_server = kwargs['DB_SERVER']
-        db_port = kwargs['DB_PORT']
+        prefix = kwargs['PREFIX']
         db_name = kwargs['DB_NAME']
         debug = kwargs['DEBUG']
 
-        uri = db_sqlalchemy + '://' + db_user + ':' + db_pwd + '@' + db_server + ':' + db_port + '/' \
+        sqlalchemy = kwargs[prefix+'SQLALCHEMY']
+        user = kwargs[prefix+'USER']
+        pwd = kwargs[prefix+'PWD']
+        server = kwargs[prefix+'SERVER']
+        port = kwargs[prefix+'PORT']
+
+        uri = sqlalchemy + '://' + user + ':' + pwd + '@' + server + ':' + port + '/' \
             + db_name + '?charset=utf8'
         self.__engine = create_engine(uri, echo=debug)
         self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.__engine))

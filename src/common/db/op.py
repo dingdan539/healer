@@ -28,8 +28,9 @@ class InitCreateDb(object):
         self.tables = dbmaps[db_name]['tables']
         cfg = load_config_auto()
         self.dbargs = fb.get_profix_property(cfg, self.prefix)
-        self.dbargs['DB_NAME'] = db_name
         self.dbargs['DEBUG'] = cfg.DEBUG
+        self.dbargs['PREFIX'] = self.prefix
+        self.dbargs['DB_NAME'] = db_name
 
 
 class CreateDb(InitCreateDb):
