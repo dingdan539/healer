@@ -7,11 +7,7 @@ class Consumer(InitMq):
         super(Consumer, self).__init__(queue_name)
         self._channel.queue_declare(queue=queue_name, durable=True)
 
-
-    @staticmethod
-    def __callback(ch, method, properties, body):
-        print body
-
-    def receive(self):
-        self._channel.basic_consume(self.__callback, queue=self._queue_name, no_ack=True)
+    def receive(self, fun):
+        self._channel.basic_consume(fun, queue=self._queue_name, no_ack=True)
+        print "alery in "
         self._channel.start_consuming()

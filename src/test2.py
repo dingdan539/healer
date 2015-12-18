@@ -11,11 +11,11 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import consumer
 
-    def call_back(msg):
+    def call_back(aa, bb, cc, msg):
         print msg + '-qusi'
 
     a = consumer.Consumer('aa_test_queue')
-    a.receive()
+    a.receive(call_back)
     # db = op.CreateDb('asset')
     # #db.init_table()
     # a = {
