@@ -1,10 +1,14 @@
-def app(environ, start_response):
-    """Simplest possible application object"""
-    data = 'Hello, World!\n'
-    status = '200 OK'
-    response_headers = [
-        ('Content-type','text/plain'),
-        ('Content-Length', str(len(data)))
-    ]
-    start_response(status, response_headers)
-    return iter([data])
+import falcon
+
+
+class Resource(object):
+    def on_get(self, req, resp):
+        """Handles GET requests"""
+        resp.status = falcon.HTTP_200  # This is the default status
+        resp.body = 'I will fuck you'
+
+app = falcon.API()
+
+resource = Resource()
+
+app.add_route('/api', resource)
