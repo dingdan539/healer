@@ -13,20 +13,20 @@ if __name__ == "__main__":
 
     db = op.CreateDb('healer')
 
-    def call_back(body):
-        print body + '-qusi2'
-        body += '-qusi2'
-        b = {
-            'tb_name': 'apple',
-            'field': {
-                'wtf': body
-            }
-        }
-        db.insert(**b)
-
-
-    a = consumer.Consumer('aa_test_queue')
-    a.receive(call_back)
+    # def call_back(body):
+    #     print body + '-qusi2'
+    #     body += '-qusi2'
+    #     b = {
+    #         'tb_name': 'apple',
+    #         'field': {
+    #             'wtf': body
+    #         }
+    #     }
+    #     db.insert(**b)
+    #
+    #
+    # a = consumer.Consumer('aa_test_queue')
+    # a.receive(call_back)
     # db = op.CreateDb('asset')
     # #db.init_table()
     # a = {
