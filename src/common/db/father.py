@@ -15,11 +15,11 @@ class DbSqlalchemy(object):
     __session = None
 
     def __init__(self, **kwargs):
-        print kwargs
         prefix = kwargs['PREFIX']
         db_name = kwargs['DB_NAME']
         debug = kwargs['DEBUG']
-
+        print 111111111111111111111111111111111
+        print db_name
         sqlalchemy = kwargs[prefix+'SQLALCHEMY']
         user = kwargs[prefix+'USER']
         pwd = kwargs[prefix+'PWD']
