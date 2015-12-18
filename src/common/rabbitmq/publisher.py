@@ -9,4 +9,4 @@ class Publisher(InitMq):
         self._channel.queue_declare(queue=queue_name, durable=True, arguments={'delivery_mode': 2})
 
     def send(self, msg):
-        print self._channel.basic_publish(exchange='', routing_key=self._queue_name, body=msg)
+        return self._channel.basic_publish(exchange='', routing_key=self._queue_name, body=msg)

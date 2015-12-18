@@ -11,8 +11,19 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import consumer
 
+    db = op.CreateDb('healer')
+
     def call_back(body):
         print body + '-qusi2'
+        body += '-qusi2'
+        b = {
+            'tb_name': 'apple',
+            'field': {
+                'wtf': body
+            }
+        }
+        db.insert(**b)
+
 
     a = consumer.Consumer('aa_test_queue')
     a.receive(call_back)
