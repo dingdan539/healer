@@ -11,7 +11,7 @@ class Consumer(InitMq):
         self._channel.queue_declare(queue=queue_name, durable=True)
 
     @staticmethod
-    def callback(ch, method, properties, body):
+    def callback(body):
         print body
 
     def receive(self):
