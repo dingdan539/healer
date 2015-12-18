@@ -6,7 +6,8 @@ class Consumer(InitMq):
     def __init__(self, queue_name, cb_fun):
         super(Consumer, self).__init__(queue_name)
         self._channel.queue_declare(queue=queue_name, durable=True)
-        Consumer.callback = cb_fun()
+        Consumer.callback = cb_fun
+        Consumer.callback('123')
 
     @staticmethod
     def callback(self, msg):
