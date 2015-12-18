@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from datetime import datetime
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.declarative import DeferredReflection
