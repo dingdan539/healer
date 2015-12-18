@@ -20,5 +20,5 @@ class Consumer(InitMq):
         pass
 
     def receive(self):
-        self._channel.basic_consume(self.__callback, queue=self._queue_name, no_ack=True)
+        self._channel.basic_consume(Consumer.__callback, queue=self._queue_name, no_ack=True)
         self._channel.start_consuming()
