@@ -3,7 +3,7 @@ import falcon
 
 class Resource(object):
     @staticmethod
-    def on_get(self, req, resp):
+    def on_get(req, resp):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200  # This is the default status
         resp.body = 'I will fuck you'
