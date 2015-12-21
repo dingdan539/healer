@@ -8,7 +8,7 @@ class Resource(object):
         print req
         """Handles GET requests"""
         resp.status = falcon.HTTP_200  # This is the default status
-        resp.body = 'I will fuck you'
+        resp.body = 'I will fuck you!'
 
 app = falcon.API()
 
