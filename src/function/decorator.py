@@ -18,6 +18,21 @@ def singleton(cls):
     return _singleton
 
 
+def singleton_only(cls):
+    instances = {}
+    threadlock = threading.Lock()
+
+    def _singleton_only(*args, **kwargs):
+        threadlock.acquire()
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        else:
+            pass
+        threadlock.release()
+        return instances[cls]
+    return _singleton_only
+
+
 def run_time(func):
     """记录函数运行时间"""
     def wrapper(*args, **kwargs):

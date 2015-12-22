@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 dbmaps = {
-    'healer': {
+    'intelligent_event': {
         'prefix': 'DB_',
-        'tables': ['apple', 'log']
+        'tables': ['alert_2015', 'alert_2016', 'alert_2017',
+                   'important_event', 'kind_map', 'level_map', 'source_map', 'type_map']
     },
     'asset': {
         'prefix': 'DB_',

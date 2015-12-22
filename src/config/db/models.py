@@ -9,26 +9,37 @@ from ...common.db import father
 
 Base = declarative_base()
 
-# ----------------------------------healer-------------------------------------------
+# ----------------------------------Intelligent_event-------------------------------------------
 
 
-class Healer(Base):
+class Intelligent_event(DeferredReflection, Base):
     __abstract__ = True
 
+class Alert_2015(Intelligent_event, father.Father):
+    __tablename__ = 'alert_2015'
 
-class Log(Healer, father.Father):
-    __tablename__ = 'log'
-    id = Column(Integer, primary_key=True)
-    message = Column(String(255), nullable=False)
+class Alert_2016(Intelligent_event, father.Father):
+    __tablename__ = 'alert_2016'
 
+class alert_2017(Intelligent_event, father.Father):
+    __tablename__ = 'alert_2017'
 
-class Apple(Healer, father.Father):
-    __tablename__ = 'apple'
-    id = Column(Integer, primary_key=True)
-    wtf = Column(String(255), nullable=False)
-    ddtime = Column(DateTime, default=lambda: datetime.now(), nullable=False)
+class Important_event(Intelligent_event, father.Father):
+    __tablename__ = 'important_event'
 
-# ----------------------------------asset-------------------------------------------
+class Kind_map(Intelligent_event, father.Father):
+    __tablename__ = 'kind_map'
+
+class Level_map(Intelligent_event, father.Father):
+    __tablename__ = 'level_map'
+
+class Source_map(Intelligent_event, father.Father):
+    __tablename__ = 'source_map'
+
+class Type_map(Intelligent_event, father.Father):
+    __tablename__ = 'type_map'
+
+# ----------------------------------Asset-------------------------------------------
 
 
 class Asset(DeferredReflection, Base):

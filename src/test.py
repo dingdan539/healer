@@ -11,14 +11,15 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import publisher
 
-    a = publisher.Publisher('aa_test_queue')
-    a.send('dingdan')
-    # db = op.CreateDb('healer')
-    # a = {
-    #     'tb_name': 'log'
-    # }
-    # mms = db.search(**a)
-    # print mms
+    # a = publisher.Publisher('aa_test_queue')
+    # a.send('dingdan')
+    db = op.CreateDb('intelligent_event')
+    a = {
+        'tb_name': 'kind_map',
+        'field': ['id', 'name']
+    }
+    mms = db.search(**a)
+    print mms
     # b = {
     #     'tb_name': 'cao',
     #     'field': {
