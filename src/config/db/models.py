@@ -48,3 +48,11 @@ class Asset(DeferredReflection, Base):
 
 class Server(Asset, father.Father):
     __tablename__ = 'server'
+
+
+class App(Asset, father.Father):
+    __tablename__ = 'app'
+
+
+class Site(Asset, father.Father):
+    __tablename__ = 'site'

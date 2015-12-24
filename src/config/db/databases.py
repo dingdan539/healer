@@ -7,6 +7,6 @@ dbmaps = {
     },
     'asset': {
         'prefix': 'DB_',
-        'tables': ['server']
+        'tables': ['server', 'app', 'site']
     }
 }
