@@ -51,7 +51,10 @@ class Father(object):
 
         ks = {
             'tb_name': 'type_map',
-            'field': ['id', 'type_id', 'name', 'level_id']
+            'field': ['id', 'name', 'level_id', 'kind_id']
         }
         res = self.f_ie_db.search(**ks)
-        self.f_type_map = {v['type_id']: {'name': v['name'], 'level_id': v['level_id']} for v in res['data']}
+        # 字典解析
+        self.f_type_map = {
+            v['id']: {'name': v['name'], 'level_id': v['level_id'], 'kind_id': v['kind_id']} for v in res['data']
+        }

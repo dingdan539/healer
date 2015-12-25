@@ -13,9 +13,9 @@ if __name__ == "__main__":
 
     from src.function.class_method import create
     a = create('server')
-    a.search_poolid_by_ip('10.4.1.155')
+    print a.search_poolid_by_ip('10.4.1.155')
     a = create('server')
-    a.search_poolid_by_ip('10.4.1.155')
+    print a.search_poolid_by_ip('10.4.1.155')
 
     # a = publisher.Publisher('aa_test_queue')
     # a.send('dingdan')

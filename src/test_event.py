@@ -11,6 +11,9 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.main_event.assemble import *
 
+    import threading
+    from time import sleep
+    from json import *
     warning_dict = dict()
     warning_dict['description'] = """
         10.4.5.122OK: tomcat port 8080 can't connectvalue:0;_Trigger: tomcat port 8080 can't connect
@@ -19,4 +22,32 @@ if __name__ == "__main__":
     warning_dict['host_name'] = "10.152.1.200_bj_ping_check"
 
     b = ZabbixAnalyse()
-    b.analyse(warning_dict)
+    n = b.analyse(warning_dict)
+    print n
+    # warning_dict2 = dict()
+    # warning_dict2['description'] = """
+    #     10.41.11.1OK: tomcat port 8080 can't connectvalue:0;_Trigger: tomcat port 8080 can't connect
+    # """
+    # warning_dict2['clock'] = 12345678
+    # warning_dict2['host_name'] = "10.41.11.1_bj_ping_check"
+    #
+    # ll = [warning_dict, warning_dict2]
+
+    # threadpool=[]
+    # f=file("hello.txt","w+")
+    # def test(nloop, ww):
+    #     b = ZabbixAnalyse()
+    #     nbb = b.analyse(ww)
+    #     print nbb
+    #     f.write(JSONEncoder().encode(nbb))
+    #     f.write("\n")
+    #
+    # for i in ll:
+    #     th = threading.Thread(target= test,args= (2, i))
+    #     threadpool.append(th)
+    #
+    # for th in threadpool:
+    #     th.start()
+    #
+    # for th in threadpool :
+    #     threading.Thread.join( th )

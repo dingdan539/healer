@@ -8,10 +8,11 @@ class ServerModule(ModuleFather):
 
     def __init__(self):
         if not self.__db:
-            print 111111111111111111111111111111
             self.__db = op.CreateDb('asset')
 
     def search_poolid_by_ip(self, ip):
+        if not ip:
+            return 0
         kwargs = {
             'tb_name': 'server',
             'field': ['app_id'],
@@ -20,4 +21,20 @@ class ServerModule(ModuleFather):
             }
         }
 
-        print self.__db.search(**kwargs)
+        data = self.__db.search(**kwargs)['data']
+        return data[0]['app_id'] if data else 0
+
+    def search_siteid_by_poolid(self, pool_id):
+        if not pool_id:
+            return 0
+        kwargs = {
+            'tb_name': 'app',
+            'field': ['site_id'],
+            'where': {
+                'id =': pool_id
+            }
+        }
+
+        data = self.__db.search(**kwargs)['data']
+        return data[0]['site_id'] if data else 0
+

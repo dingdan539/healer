@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from interface import *
 from pattern_father import *
+from ..function.class_method import create
 import re
 
 
@@ -19,5 +20,15 @@ class SeparateSitePool(Father, InterfaceSeparate):
         this class must behind the SeparateZabbixIpStatus !
     """
     def separate(self, warning_dict):
-        warning_dict['77'] = 22
+        ip = warning_dict['ip']
+        server_module = create('server')
+        pool_id = server_module.search_poolid_by_ip(ip)
+        site_id = server_module.search_siteid_by_poolid(pool_id)
+        warning_dict['pool_id'] = pool_id
+        warning_dict['site_id'] = site_id
         return warning_dict
+
+
+class SeparateType(Father, InterfaceSeparate):
+    def separate(self, warning_dict):
+        desc = warning_dict['description']

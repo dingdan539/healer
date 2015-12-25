@@ -1,10 +1,8 @@
 
 
-class Ding(object):
-    name = None
+aa = {'a':1, 'b':2}
 
-    def __init__(self):
-        self.name = 'qusi'
-
-
-print type(Ding.__name__)
+bb = aa
+bb['a'] = 55
+print aa
+print bb

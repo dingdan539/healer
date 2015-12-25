@@ -19,7 +19,7 @@ class Container(object):
 
     def separate_perform(self, warning_dict):
         for c in self.__separate_list:
-            warning_dict = c.separate(warning_dict)
+            c.separate(warning_dict)
         return warning_dict
 
 
