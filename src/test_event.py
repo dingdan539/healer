@@ -15,12 +15,11 @@ if __name__ == "__main__":
     from time import sleep
     from json import *
     warning_dict = dict()
-    warning_dict['description'] = """10.4.29.175OK: memcached 11211 connections more than 12000value:11868
-    10.4.29.175OK: memcached 11211 connections more than 12000value:11868
-    10.4.29.175OK: memcached 11211 connections more than 12000value:11868
+    warning_dict['description'] = """
+        10.4.43.176OK: tomcat port 8080 can't connectvalue:0;_Trigger: tomcat port 8080 can't connect
     """
     warning_dict['clock'] = 12345678
-    warning_dict['host_name'] = "110.4.29.175OK:"
+    warning_dict['host_name'] = " empty"
     warning_dict['source_id'] = 1
 
     b = ZabbixAnalyse()
