@@ -14,19 +14,19 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
             res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
             print 2222222222222222
             print res
-            if 'succeeded' not in res:
-                time.sleep(0.1)
-                res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
-                print 111111111111111
-                print res
-                if 'succeeded' not in res:
-                    warning_dict['remark'] = res
-                    print warning_dict
-                    kwargs = {
-                        'tb_name': 'important_event',
-                        'field': warning_dict
-                    }
-                    self.f_ie_db.insert(**kwargs)
+            # if 'succeeded' not in res:
+            #     time.sleep(0.1)
+            #     res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
+            #     print 111111111111111
+            #     print res
+            #     if 'succeeded' not in res:
+            #         warning_dict['remark'] = res
+            #         print warning_dict
+            #         kwargs = {
+            #             'tb_name': 'important_event',
+            #             'field': warning_dict
+            #         }
+            #         self.f_ie_db.insert(**kwargs)
             return True
         else:
             return False
