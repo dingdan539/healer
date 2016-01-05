@@ -13,8 +13,8 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
         ip = warning_dict['ip']
         if (type_id == 4) and (status == 'PROBLEM'):
             cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 8080'''
-            code, stdout, stderr = fb.command(cmdstr)
-            print stdout
+            #code, stdout, stderr = fb.command(cmdstr)
+            print fb.command(cmdstr)
             # if 'succeeded' not in stdout:
             #     time.sleep(0.1)
             #     code2, stdout2, stderr2 = fb.command(cmdstr)
