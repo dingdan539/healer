@@ -15,17 +15,17 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
             cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 8080'''
             code, stdout, stderr = fb.command(cmdstr)
             print stdout
-            if 'succeeded' not in stdout:
-                time.sleep(0.1)
-                code2, stdout2, stderr2 = fb.command(cmdstr)
-                print stdout2
-                if 'succeeded' not in stdout2:
-                    warning_dict['remark'] = stdout2
-                    kwargs = {
-                        'tb_name': 'important_event',
-                        'field': warning_dict
-                    }
-                    self.f_ie_db.insert(**kwargs)
+            # if 'succeeded' not in stdout:
+            #     time.sleep(0.1)
+            #     code2, stdout2, stderr2 = fb.command(cmdstr)
+            #     print stdout2
+            #     if 'succeeded' not in stdout2:
+            #         warning_dict['remark'] = stdout2
+            #         kwargs = {
+            #             'tb_name': 'important_event',
+            #             'field': warning_dict
+            #         }
+            #         self.f_ie_db.insert(**kwargs)
             return True
         else:
             return False
