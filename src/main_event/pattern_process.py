@@ -18,7 +18,7 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
                 if 'succeeded' not in res:
                     warning_dict['remark'] = res
                     kwargs = {
-                        'tb_name': 'import_event',
+                        'tb_name': 'important_event',
                         'field': warning_dict
                     }
                     self.f_ie_db.insert(**kwargs)
