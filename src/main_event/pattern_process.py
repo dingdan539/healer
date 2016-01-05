@@ -17,6 +17,7 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
                 res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
                 if 'succeeded' not in res:
                     warning_dict['remark'] = res
+                    print warning_dict
                     kwargs = {
                         'tb_name': 'important_event',
                         'field': warning_dict
