@@ -13,19 +13,18 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
         ip = warning_dict['ip']
         if (type_id == 4) and (status == 'PROBLEM'):
             cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 8080'''
-            print fb.command(cmdstr)
-            # if 'succeeded' not in fanhui:
-            #     time.sleep(0.1)
-            #     res2 = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
-            #     fanhui2 = res2.read()
-            #     if 'succeeded' not in fanhui2:
-            #         warning_dict['remark'] = fanhui2
-            #         print warning_dict
-            #         kwargs = {
-            #             'tb_name': 'important_event',
-            #             'field': warning_dict
-            #         }
-            #         self.f_ie_db.insert(**kwargs)
+            code, stdout, stderr = fb.command(cmdstr)
+            if 'succeeded' not in stdout:
+                time.sleep(0.1)
+                code, stdout, stderr = fb.command(cmdstr)
+                if 'succeeded' not in stdout:
+                    warning_dict['remark'] = stdout
+                    print warning_dict
+                    kwargs = {
+                        'tb_name': 'important_event',
+                        'field': warning_dict
+                    }
+                    self.f_ie_db.insert(**kwargs)
             return True
         else:
             return False
