@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import subprocess
 
 
 def get_profix_property(cls, prefix=''):
@@ -7,5 +8,8 @@ def get_profix_property(cls, prefix=''):
     return {k: v for k, v in dicts.iteritems() if k.startswith(prefix)}
 
 
-def key_in_argvs(key):
-    pass
+def command(cmdstr):
+    proc = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = proc.communicate()
+    code = proc.returncode
+    return code, stdout, stderr
