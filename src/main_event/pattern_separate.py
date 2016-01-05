@@ -9,10 +9,11 @@ class SeparateZabbixIpStatus(Father, InterfaceSeparate):
     def separate(self, warning_dict):
         desc = warning_dict['description']
         res = re.search(r"([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(.*?):", desc)
-        ip, status = (res.group(1), res.group(2)) if res else ('', '')
-        warning_dict['ip'] = ip
-        warning_dict['status'] = status
-        return warning_dict
+        try:
+            ip, status = (res.group(1), res.group(2)) if res else ('', '')
+        finally:
+            warning_dict['ip'] = ip
+            warning_dict['status'] = status
 
 
 class SeparateSitePool(Father, InterfaceSeparate):
@@ -26,9 +27,15 @@ class SeparateSitePool(Father, InterfaceSeparate):
         site_id = server_module.search_siteid_by_poolid(pool_id)
         warning_dict['pool_id'] = pool_id
         warning_dict['site_id'] = site_id
-        return warning_dict
 
 
 class SeparateType(Father, InterfaceSeparate):
     def separate(self, warning_dict):
-        desc = warning_dict['description']
+        desc = warning_dict['description'][:80]
+        for i in self.f_type_map:
+            res = re.search(self.f_type_map[i]['name'], desc)
+            if res:
+                warning_dict['type_id'] = i
+                warning_dict['kind_id'] = self.f_type_map[i]['kind_id']
+                warning_dict['level_id'] = self.f_type_map[i]['level_id']
+                break

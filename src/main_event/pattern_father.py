@@ -23,38 +23,35 @@ class Father(object):
     def __init__(self):
         if not Father.__init_tag:
             Father.__init_tag = True
-        else:
-            return
+            Father.f_ie_db = CreateDb('intelligent_event')
 
-        self.f_ie_db = CreateDb('intelligent_event')
+            ks = {
+                'tb_name': 'kind_map',
+                'field': ['id', 'name']
+            }
+            res = Father.f_ie_db.search(**ks)
+            Father.f_kind_map = {v['id']: v['name'] for v in res['data']}
 
-        ks = {
-            'tb_name': 'kind_map',
-            'field': ['id', 'name']
-        }
-        res = self.f_ie_db.search(**ks)
-        self.f_kind_map = {v['id']: v['name'] for v in res['data']}
+            ks = {
+                'tb_name': 'level_map',
+                'field': ['id', 'name']
+            }
+            res = Father.f_ie_db.search(**ks)
+            Father.f_level_map = {v['id']: v['name'] for v in res['data']}
 
-        ks = {
-            'tb_name': 'level_map',
-            'field': ['id', 'name']
-        }
-        res = self.f_ie_db.search(**ks)
-        self.f_level_map = {v['id']: v['name'] for v in res['data']}
+            ks = {
+                'tb_name': 'source_map',
+                'field': ['id', 'name']
+            }
+            res = Father.f_ie_db.search(**ks)
+            Father.f_source_map = {v['id']: v['name'] for v in res['data']}
 
-        ks = {
-            'tb_name': 'source_map',
-            'field': ['id', 'name']
-        }
-        res = self.f_ie_db.search(**ks)
-        self.f_source_map = {v['id']: v['name'] for v in res['data']}
-
-        ks = {
-            'tb_name': 'type_map',
-            'field': ['id', 'name', 'level_id', 'kind_id']
-        }
-        res = self.f_ie_db.search(**ks)
-        # 字典解析
-        self.f_type_map = {
-            v['id']: {'name': v['name'], 'level_id': v['level_id'], 'kind_id': v['kind_id']} for v in res['data']
-        }
+            ks = {
+                'tb_name': 'type_map',
+                'field': ['id', 'name', 'level_id', 'kind_id']
+            }
+            res = Father.f_ie_db.search(**ks)
+            # 字典解析
+            Father.f_type_map = {
+                v['id']: {'name': v['name'], 'level_id': v['level_id'], 'kind_id': v['kind_id']} for v in res['data']
+            }

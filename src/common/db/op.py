@@ -41,7 +41,8 @@ class CreateDb(InitCreateDb):
 
     error_map = {
         0: 'succ',
-        1: 'db is empty in config'
+        1: 'db is empty in config',
+        2: 'field must not empty'
     }
 
     @staticmethod
@@ -83,11 +84,14 @@ class CreateDb(InitCreateDb):
             my_prefix = sql[:sql.index(' ')].lower()
             res = self.__session.execute(sql)
             if my_prefix == 'select':
-                return res.fetchall()
+                k = res.keys()
+                data = res.fetchall()
+                return [dict(zip(k, i)) for i in data]
+
             elif my_prefix in ['update', 'delete']:
                 return res.rowcount
             elif my_prefix == 'insert':
-                return 'insert go'
+                return res.lastrowid
             else:
                 return False
         except Exception, data:
@@ -221,7 +225,11 @@ class CreateDb(InitCreateDb):
             field - {} or [{},{}] | {'name': 'dd'} or [{'name': 'dd'}, {'name': 'dd2', 'tag': 'tom'}]
 
         Returns:
-            None
+            <src.config.db.models.Alert_2016 object at 0x00000000044E8B70>
+            {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000000004444BA8>, u'description':
+             '10.4.29.175OK:...    ', u'type_id': 15L, u'ip': '10.4.29.175', u'level_id': 3L}
+            or
+            [<src.config.db.models.Alert_2016 object at 0x00000000044E8B70>, ...]
         """
         p_f = kwargs.get('field', {})
 
@@ -234,12 +242,18 @@ class CreateDb(InitCreateDb):
 
         with self.__session.begin():
             if isinstance(p_f, dict):
-                self.__session.add(t(**p_f))
+                tb_ins = t(**p_f)
+                self.__session.add(tb_ins)
+                self.__session.flush()
+                return tb_ins
             elif isinstance(p_f, list):
                 lists = []
                 for i in p_f:
                     lists.append(t(**i))
                 self.__session.add_all(lists)
+                self.__session.flush()
+                return lists
+
 
     def delete(self, **kwargs):
         """

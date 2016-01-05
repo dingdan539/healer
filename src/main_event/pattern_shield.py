@@ -8,8 +8,6 @@ class ShieldAll(Father, InterfaceShield):
     """
         this class must behind the pattern_separate
     """
-    def __init__(self):
-        super(ShieldAll, self).__init__()
 
     def shield(self, warning_dict):
         desc = warning_dict['description']
@@ -18,18 +16,43 @@ class ShieldAll(Father, InterfaceShield):
         pool_id = warning_dict['pool_id']
         source_id = warning_dict['source_id']
 
-        kwargs = {
-            'tb_name': 'shield',
-            'where': {
-                'start_time >=': clock,
-                'end_time <=': clock,
-            },
-            'or': {
-                'pool_id =': 486,
-                'ip =': 2
-            }
-        }
-        print self.f_kind_map
-        print super(ShieldAll, self).f_kind_map
-        #exit(0)
-        #print father.f_ie_db.search(**kwargs)
+        sql = "select * from shield where %s between start_time and end_time" % (clock, )
+
+        data = self.f_ie_db.execute(sql)
+
+        if data:
+            for item in data:
+                judge_list = []
+
+                if item['pool_id'] != 0:
+                    if item['pool_id'] == pool_id:
+                        judge_list.append(False)
+                    else:
+                        judge_list.append(True)
+
+                if item['ip'] != '':
+                    if item['ip'] == ip:
+                        judge_list.append(False)
+                    else:
+                        judge_list.append(True)
+
+                if item['source_id'] != 0:
+                    if item['source_id'] == source_id:
+                        judge_list.append(False)
+                    else:
+                        judge_list.append(True)
+
+                if item['key'] != '':
+                    if item['key'] in desc:
+                        judge_list.append(False)
+                    else:
+                        judge_list.append(True)
+
+                count = len(judge_list)
+                false_count = 0
+                for i in judge_list:
+                    if not i:
+                        false_count += 1
+                if (false_count == count) and (false_count != 0):
+                    return False
+        return True

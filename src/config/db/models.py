@@ -15,14 +15,20 @@ Base = declarative_base()
 class Intelligent_event(DeferredReflection, Base):
     __abstract__ = True
 
-class Alert_2015(Intelligent_event, father.Father):
-    __tablename__ = 'alert_2015'
-
 class Alert_2016(Intelligent_event, father.Father):
     __tablename__ = 'alert_2016'
 
 class alert_2017(Intelligent_event, father.Father):
     __tablename__ = 'alert_2017'
+
+class alert_2018(Intelligent_event, father.Father):
+    __tablename__ = 'alert_2018'
+
+class alert_2019(Intelligent_event, father.Father):
+    __tablename__ = 'alert_2019'
+
+class alert_2020(Intelligent_event, father.Father):
+    __tablename__ = 'alert_2020'
 
 class Important_event(Intelligent_event, father.Father):
     __tablename__ = 'important_event'
@@ -32,6 +38,9 @@ class Kind_map(Intelligent_event, father.Father):
 
 class Level_map(Intelligent_event, father.Father):
     __tablename__ = 'level_map'
+
+class Shield(Intelligent_event, father.Father):
+    __tablename__ = 'shield'
 
 class Source_map(Intelligent_event, father.Father):
     __tablename__ = 'source_map'
