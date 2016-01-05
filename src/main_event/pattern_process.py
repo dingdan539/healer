@@ -16,18 +16,18 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
             print 1111111111111
             print fanhui
             print 1111111111111
-            if 'succeeded' not in fanhui:
-                time.sleep(0.1)
-                res2 = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
-                fanhui2 = res2.read()
-                if 'succeeded' not in fanhui2:
-                    warning_dict['remark'] = fanhui2
-                    print warning_dict
-                    kwargs = {
-                        'tb_name': 'important_event',
-                        'field': warning_dict
-                    }
-                    self.f_ie_db.insert(**kwargs)
+            # if 'succeeded' not in fanhui:
+            #     time.sleep(0.1)
+            #     res2 = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
+            #     fanhui2 = res2.read()
+            #     if 'succeeded' not in fanhui2:
+            #         warning_dict['remark'] = fanhui2
+            #         print warning_dict
+            #         kwargs = {
+            #             'tb_name': 'important_event',
+            #             'field': warning_dict
+            #         }
+            #         self.f_ie_db.insert(**kwargs)
             return True
         else:
             return False
