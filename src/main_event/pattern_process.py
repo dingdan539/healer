@@ -16,10 +16,9 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
             code, stdout, stderr = fb.command(cmdstr)
             if 'succeeded' not in stdout:
                 time.sleep(0.1)
-                code, stdout, stderr = fb.command(cmdstr)
-                if 'succeeded' not in stdout:
-                    warning_dict['remark'] = stdout
-                    print warning_dict
+                code2, stdout2, stderr2 = fb.command(cmdstr)
+                if 'succeeded' not in stdout2:
+                    warning_dict['remark'] = stdout2
                     kwargs = {
                         'tb_name': 'important_event',
                         'field': warning_dict
