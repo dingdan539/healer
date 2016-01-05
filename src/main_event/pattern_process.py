@@ -11,9 +11,9 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
         status = warning_dict['status']
         ip = warning_dict['ip']
         if (type_id == 4) and (status == 'PROBLEM'):
-            res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
+            res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
             print 2222222222222222
-            print res
+            print res.read()
             # if 'succeeded' not in res:
             #     time.sleep(0.1)
             #     res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
