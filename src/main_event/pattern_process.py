@@ -13,8 +13,10 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
         if (type_id == 4) and (status == 'PROBLEM'):
             res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
             fanhui = res.read()
+            ff2 = res.readlines()
             print 1111111111111
             print fanhui
+            print ff2
             print 1111111111111
             # if 'succeeded' not in fanhui:
             #     time.sleep(0.1)
