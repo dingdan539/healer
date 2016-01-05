@@ -15,6 +15,8 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
             if 'succeeded' not in res:
                 time.sleep(0.1)
                 res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''').read()
+                print 111111111111111
+                print res
                 if 'succeeded' not in res:
                     warning_dict['remark'] = res
                     print warning_dict
