@@ -12,13 +12,13 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
         ip = warning_dict['ip']
         if (type_id == 4) and (status == 'PROBLEM'):
             res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
-            res = res.read()
-            if 'succeeded' not in res:
+            fanhui = res.read()
+            if 'succeeded' not in fanhui:
                 time.sleep(0.1)
-                res = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
-                res = res.read()
-                if 'succeeded' not in res:
-                    warning_dict['remark'] = res
+                res2 = os.popen(r'''nc -z -vv -w 1 ''' + ip + ''' 8080''')
+                fanhui2 = res2.read()
+                if 'succeeded' not in fanhui2:
+                    warning_dict['remark'] = fanhui2
                     print warning_dict
                     kwargs = {
                         'tb_name': 'important_event',
