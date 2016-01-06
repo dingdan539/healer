@@ -11,14 +11,14 @@ if __name__ == "__main__":
     from src.common.db import op
     from src.common.rabbitmq import publisher
 
-    from src.function.class_method import create
-    a = create('server')
-    print a.search_poolid_by_ip('10.4.1.155')
-    a = create('server')
-    print a.search_poolid_by_ip('10.4.1.155')
+    # from src.function.class_method import create
+    # a = create('server')
+    # print a.search_poolid_by_ip('10.4.1.155')
+    # a = create('server')
+    # print a.search_poolid_by_ip('10.4.1.155')
 
-    # a = publisher.Publisher('aa_test_queue')
-    # a.send('dingdan')
+    a = publisher.Publisher('zabbix_stability_queue')
+    a.send('dingdan')
     # db = op.CreateDb('intelligent_event')
     # a = {
     #     'tb_name': 'kind_map',
