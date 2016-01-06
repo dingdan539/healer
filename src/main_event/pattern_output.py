@@ -15,6 +15,6 @@ class OutputZabbix(Father, InterfaceOutPut):
 
 class OutputMqStability(Father, InterfaceOutPut):
     def output(self, warning_dict):
-        kind_map = warning_dict['kind_map']
-        if kind_map == 2:
+        kind_id = warning_dict['kind_id']
+        if kind_id == 2:
             self.f_stb_p_q.send(warning_dict)
