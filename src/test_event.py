@@ -14,6 +14,9 @@ if __name__ == "__main__":
     import threading
     from time import sleep
     from json import *
+
+    b = ZabbixAnalyse()
+
     warning_dict = dict()
     warning_dict['description'] = """
     10.4.11.82PROBLEM: tomcat port 8080 can't connectvalue:0;_Trigger: tomcat port 8080 can't connect
@@ -23,7 +26,17 @@ if __name__ == "__main__":
     warning_dict['host_name'] = " empty"
     warning_dict['source_id'] = 1
 
-    b = ZabbixAnalyse()
+    n = b.analyse(warning_dict)
+
+    warning_dict = dict()
+    warning_dict['description'] = """
+    10.4.11.44PROBLEM: Net traffic Utilization is more than 600Mb/s on hadoop-11-44 i
+    """
+    # 10.4.11.82 10.4.43.176
+    warning_dict['clock'] = 12345678
+    warning_dict['host_name'] = " empty"
+    warning_dict['source_id'] = 1
+
     n = b.analyse(warning_dict)
 
     # warning_dict2 = dict()

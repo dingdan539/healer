@@ -2,8 +2,10 @@
 from interface import *
 from pattern_father import *
 import src.function.basic as fb
-import os
 import time
+
+"""所有类都必须是互斥的，满足一个不满足别的"""
+
 
 class ProcessZabbixTomcat(Father, InterfaceOutPut):
     """必须有返回bool True - 执行并break False - 寻找下一个执行点"""
@@ -27,3 +29,10 @@ class ProcessZabbixTomcat(Father, InterfaceOutPut):
             return True
         else:
             return False
+
+
+# class ProcessDirect(Father, InterfaceOutPut):
+#     def process(self, warning_dict):
+#         source_id = warning_dict['source_id']
+#         type_id = warning_dict['type_id']
+#         if

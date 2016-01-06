@@ -22,6 +22,7 @@ class ZabbixAnalyse(object):
         self.__container.set_shield(ShieldAll())
 
         self.__container.set_output(OutputZabbix())
+        self.__container.set_output(OutputMqStability())  # 稳定性报警就退到这个队列里
 
         self.__container.set_process(ProcessZabbixTomcat())
 

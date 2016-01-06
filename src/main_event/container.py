@@ -31,10 +31,8 @@ class Container(object):
         return warning_dict
 
     def output_perform(self, warning_dict):
-        result_wrap = []
         for c in self.__output_list:
-            result_wrap.append(c.output(warning_dict))
-        return result_wrap
+            c.output(warning_dict)
 
     def process_perform(self, warning_dict):
         for c in self.__process_list:
