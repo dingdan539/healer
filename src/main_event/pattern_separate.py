@@ -31,7 +31,7 @@ class SeparateSitePool(Father, InterfaceSeparate):
 
 class SeparateType(Father, InterfaceSeparate):
     def separate(self, warning_dict):
-        desc = warning_dict['description'][:80]
+        desc = warning_dict['description'][:80].lower()
         for i in self.f_type_map:
             res = re.search(self.f_type_map[i]['name'], desc)
             if res:
@@ -39,3 +39,7 @@ class SeparateType(Father, InterfaceSeparate):
                 warning_dict['kind_id'] = self.f_type_map[i]['kind_id']
                 warning_dict['level_id'] = self.f_type_map[i]['level_id']
                 break
+            else:
+                warning_dict['type_id'] = 0
+                warning_dict['kind_id'] = 0
+                warning_dict['level_id'] = 0
