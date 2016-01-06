@@ -2,6 +2,7 @@
 from interface import *
 from pattern_father import *
 import time
+import json
 
 
 class OutputZabbix(Father, InterfaceOutPut):
@@ -18,4 +19,4 @@ class OutputMqStability(Father, InterfaceOutPut):
         print warning_dict
         kind_id = warning_dict['kind_id']
         if kind_id == 2:
-            self.f_stb_p_q.send(warning_dict)
+            self.f_stb_p_q.send(json.dumps(warning_dict))
