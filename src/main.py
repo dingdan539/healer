@@ -12,6 +12,7 @@ if __name__ == "__main__":
     sys.path.append(ROOT_PATH)
 
     from src.main_event.assemble import *
+    from src.common.db.op import *
     from src.common.rabbitmq import consumer
 
     #cum = consumer.Consumer('zabbix_event_queue')
