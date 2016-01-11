@@ -14,11 +14,12 @@ if __name__ == "__main__":
     from src.main_event.assemble import *
     from src.common.rabbitmq import consumer
 
-    cum = consumer.Consumer('zabbix_stability_queue')
+    cum = consumer.Consumer('zabbix_event_queue')
 
-    a = ZabbixAnalyse()
+    a = ZabbixStabilityAnalyse()
 
     def fun(body):
         a.analyse(body)
 
     cum.receive(fun)
+

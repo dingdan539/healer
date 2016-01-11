@@ -18,9 +18,7 @@ if __name__ == "__main__":
     b = ZabbixAnalyse()
 
     warning_dict = dict()
-    warning_dict['description'] = """
-    10.4.11.82PROBLEM: tomcat port 8080 can't connectvalue:0;_Trigger: tomcat port 8080 can't connect
-    """
+    warning_dict['description'] = """10.4.11.82PROBLEM: tomcat port 8080 can't connectvalue:0;_Trigger: tomcat port 8080 can't connect"""
     # 10.4.11.82 10.4.43.176
     warning_dict['clock'] = 12345678
     warning_dict['host_name'] = " empty"
@@ -29,9 +27,7 @@ if __name__ == "__main__":
     n = b.analyse(warning_dict)
 
     warning_dict = dict()
-    warning_dict['description'] = """
-    10.4.11.44PROBLEM: Net traffic Utilization is more than 600Mb/s on hadoop-11-44 i
-    """
+    warning_dict['description'] = """10.4.11.44PROBLEM: Net traffic Utilization is more than 600Mb/s on hadoop-11-44 i"""
     # 10.4.11.82 10.4.43.176
     warning_dict['clock'] = 12345678
     warning_dict['host_name'] = " empty"
