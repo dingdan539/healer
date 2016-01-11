@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import sys
+import json
 from config import *
 
 if __name__ == "__main__":
@@ -19,6 +20,6 @@ if __name__ == "__main__":
     a = ZabbixAnalyse()
 
     def fun(body):
-        a.analyse(body)
+        a.analyse(json.JSONEncoder.decode(body))
 
     cum.receive(fun)
