@@ -20,6 +20,6 @@ if __name__ == "__main__":
     a = ZabbixAnalyse()
 
     def fun(body):
-        a.analyse(json.JSONEncoder.decode(body))
+        a.analyse(json.JSONDecoder.decode(body))
 
     cum.receive(fun)
