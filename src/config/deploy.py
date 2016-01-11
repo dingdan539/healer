@@ -1,7 +1,7 @@
 class Config(object):
     AUTHOR = "dingdan"
     ENV = "deploy"
-    DEBUG = False
+    DEBUG = True
 
 
 class DeployConfig(Config):
