@@ -33,11 +33,11 @@ class ZabbixAnalyse(object):
 
     def analyse(self, warning_dict):
         copy_warning_dict = copy.copy(warning_dict)
-        print copy_warning_dict
+        #print copy_warning_dict
         data = self.__container.separate_perform(copy_warning_dict)
         result = self.__container.shield_perform(data)
-        print data
-        print result
+        #print data
+        #print result
         if result:
             self.__container.output_perform(data)
             self.__container.process_perform(data)
