@@ -6,5 +6,6 @@ from config import *
 import function.basic as fb
 
 if __name__ == "__main__":
-    from src.main_event.assemble import *
-    b = ZabbixStabilityAnalyse()
+    aa = {}
+    for i in aa:
+        print 1
