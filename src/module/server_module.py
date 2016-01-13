@@ -17,7 +17,8 @@ class ServerModule(ModuleFather):
             'tb_name': 'server',
             'field': ['app_id'],
             'where': {
-                'ip =': ip
+                'ip =': ip,
+                'server_status_id !=': 400
             }
         }
 
@@ -31,7 +32,8 @@ class ServerModule(ModuleFather):
             'tb_name': 'app',
             'field': ['site_id'],
             'where': {
-                'id =': pool_id
+                'id =': pool_id,
+                'status =': 0
             }
         }
 
