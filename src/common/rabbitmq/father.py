@@ -21,6 +21,5 @@ class InitMq(object):
         vhost = qargs[prefix+'VHOST']
 
         credentials = pika.PlainCredentials(user, pwd)
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host, port, vhost, credentials,
-                                                                             socket_timeout=1800, heartbeat_interval=60))
+        self._connection = pika.BlockingConnection(pika.ConnectionParameters(host, port, vhost, credentials))
         self._channel = self._connection.channel()
