@@ -23,6 +23,7 @@ class Publisher(InitMq):
         queue.durable = True
         queue.declare()
         self.queue = queue
+        self._channel.enable_publisher_confirms()
 
     def send(self, msg):
         message = rabbitpy.Message(self._channel, msg)
