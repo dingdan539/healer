@@ -26,4 +26,6 @@ class Publisher(InitMq):
 
     def send(self, msg):
         message = rabbitpy.Message(self._channel, msg)
-        message.publish('', self._queue_name)
+        print message
+        res = message.publish('', self._queue_name)
+        print res
