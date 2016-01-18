@@ -27,9 +27,6 @@ class Consumer(InitMq):
         self.queue = queue
 
     def receive(self, fun):
-        print 'receive:'
-        print self.queue
-        for message in self.queue:
-            print 'mmmm'
-            print message
-            fun(message)
+        g = self.queue.consume(True)
+        for i in g:
+            fun(i)
