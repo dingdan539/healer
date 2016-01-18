@@ -30,6 +30,6 @@ class Consumer(InitMq):
         try:
             g = self.queue.consume(True)
             for i in g:
-                fun(i.json())
+                fun(i.body)
         except KeyboardInterrupt:
             print 'keyboard exit'
