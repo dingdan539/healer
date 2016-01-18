@@ -27,6 +27,9 @@ class Consumer(InitMq):
         self.queue = queue
 
     def receive(self, fun):
-        g = self.queue.consume(True)
-        for i in g:
-            fun(i)
+        try:
+            g = self.queue.consume(True)
+            for i in g:
+                fun(i.json())
+        except KeyboardInterrupt:
+            print 'keyboard exit'
