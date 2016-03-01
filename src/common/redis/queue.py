@@ -24,9 +24,9 @@ class InitQ(object):
 
     def get(self, block=True, timeout=None):
         if block:
-            item = self.__db.blpop(self._key, timeout=timeout)
+            item = self._connection.blpop(self._key, timeout=timeout)
         else:
-            item = self.__db.lpop(self._key)
+            item = self._connection.lpop(self._key)
 
         if item:
             return item
