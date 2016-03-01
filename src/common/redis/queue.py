@@ -22,6 +22,7 @@ class InitQ(object):
             print 11111111111111
             print self._connection
         except Exception, e:
+            print 2222222222222222
             print Exception, e
 
     def get(self, block=True, timeout=None):
