@@ -16,9 +16,9 @@ class InitQ(object):
         host = qargs[prefix+'HOST']
         port = qargs[prefix+'PORT']
         db = 0
-        redis_kwargs = {host: host, port: port, db: db}
+
         try:
-            self._connection = redis.Redis(**redis_kwargs)
+            self._connection = redis.Redis(host=host, port=port, db=db)
             print 11111111111111
             print self._connection
         except Exception, e:
