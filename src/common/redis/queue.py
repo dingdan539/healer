@@ -19,7 +19,7 @@ class InitQ(object):
         try:
             self._connection = redis.Redis(**redis_kwargs)
         except Exception, e:
-            print 'redis error:' + e
+            print Exception, e
 
     def get(self, block=True, timeout=None):
         if block:
