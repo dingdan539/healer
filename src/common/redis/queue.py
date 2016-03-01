@@ -19,6 +19,8 @@ class InitQ(object):
         redis_kwargs = {host: host, port: port, db: db}
         try:
             self._connection = redis.Redis(**redis_kwargs)
+            print 11111111111111
+            print self._connection
         except Exception, e:
             print Exception, e
 
