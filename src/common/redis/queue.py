@@ -15,7 +15,8 @@ class InitQ(object):
         qargs = fb.get_profix_property(cfg, prefix)
         host = qargs[prefix+'HOST']
         port = qargs[prefix+'PORT']
-        redis_kwargs = {host: host, port: port}
+        db = 0
+        redis_kwargs = {host: host, port: port, db: db}
         try:
             self._connection = redis.Redis(**redis_kwargs)
         except Exception, e:
