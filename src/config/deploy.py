@@ -16,3 +16,6 @@ class DeployConfig(Config):
     RMQ_USER = 'opsdev'
     RMQ_PWD = 'opsdev'
     RMQ_VHOST = '/'
+
+    REDIS_HOST = 'redis01.oms.yihaodian.com.cn'
+    REDIS_PORT = 6379

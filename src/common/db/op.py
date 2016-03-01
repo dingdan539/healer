@@ -254,7 +254,6 @@ class CreateDb(InitCreateDb):
                 self.__session.flush()
                 return lists
 
-
     def delete(self, **kwargs):
         """
         Args:

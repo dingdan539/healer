@@ -5,12 +5,12 @@
 """
 qmaps = {
     'zabbix_event_queue': {
-        'prefix': 'RMQ_',
+        'prefix': 'REDIS_',
         'exchange': '',  # 定义交换机
         'route': ''      # 定义路由关键字
     },
     'zabbix_stability_queue': {
-        'prefix': 'RMQ_',
+        'prefix': 'REDIS_',
         'exchange': '',  # 定义交换机
         'route': ''      # 定义路由关键字
     }
