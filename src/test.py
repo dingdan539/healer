@@ -17,4 +17,6 @@ if __name__ == "__main__":
 
     cum = queue.InitQ('zabbix_event_queue')
 
-    print cum.get()
+    def aa(stri):
+        print json.loads(stri)
+    print cum.blpop(aa)

@@ -19,18 +19,11 @@ class InitQ(object):
 
         try:
             self._connection = redis.Redis(host=host, port=port, db=db)
-            print 11111111111111
-            print self._connection
         except Exception, e:
-            print 2222222222222222
             print Exception, e
 
-    def get(self, block=True, timeout=None):
-        if block:
-            item = self._connection.blpop(self._key, timeout=timeout)
-        else:
-            item = self._connection.lpop(self._key)
-
-        if item:
-            return item
-            #item = item[1]
+    def blpop(self, fun):
+        while True:
+            item = self._connection.blpop(self._key, timeout=None)
+            if item:
+                fun(item[1])
