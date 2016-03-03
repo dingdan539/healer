@@ -1,21 +1,21 @@
 # -*- coding:utf-8 -*-
 
 import sys
-import pprint
+import json
 from config import *
-import function.basic as fb
 
 if __name__ == "__main__":
+
     config = load_config_auto()
 
-    print config
+    ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    # ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    #
-    # sys.path.append(ROOT_PATH)
-    #
-    # from src.common.rabbitmq import publisher
-    #
-    # a = publisher.Publisher('zabbix_event_queue')
-    # aaa = 'sadasdasd'
-    # a.send(aaa)
+    sys.path.append(ROOT_PATH)
+
+    # from src.main_event.assemble import *
+    from src.common.redis import queue
+
+    cum = queue.InitQ('zabbix_event_queue')
+
+    aa = "123"
+    print cum.rpush(aa)

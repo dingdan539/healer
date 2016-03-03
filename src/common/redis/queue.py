@@ -27,3 +27,6 @@ class InitQ(object):
             item = self._connection.blpop(self._key, timeout=None)
             if item:
                 fun(item[1])
+
+    def rush(self, data):
+        self._connection.rpush(self._key, data)
