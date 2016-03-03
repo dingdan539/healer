@@ -19,4 +19,4 @@ class OutputZabbixMqStability(Father, InterfaceOutPut):
         kind_id = warning_dict['kind_id']
         source_id = warning_dict['source_id']
         if (kind_id == 2) and (source_id == 1):
-            self.f_stb_p_q.send(json.dumps(warning_dict))
+            self.f_stb_p_q.rpush(json.dumps(warning_dict))

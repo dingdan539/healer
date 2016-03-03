@@ -13,13 +13,14 @@ if __name__ == "__main__":
     sys.path.append(ROOT_PATH)
 
     from src.main_event.assemble import *
-    from src.common.rabbitmq import consumer
+    # from src.common.rabbitmq import consumer
+    from src.common.redis import queue
 
-    cum = consumer.Consumer('zabbix_event_queue')
+    cum = queue.InitQ('zabbix_event_queue')
 
     a = ZabbixAnalyse()
 
     def fun(body):
         a.analyse(json.loads(body))
 
-    cum.receive(fun)
+    cum.blpop(fun)

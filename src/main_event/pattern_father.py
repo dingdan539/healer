@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from ..common.db.op import *
-from ..common.rabbitmq.publisher import *
+from ..common.redis.queue import *
 
 
 class Father(object):
@@ -26,7 +26,7 @@ class Father(object):
         if not Father.__init_tag:
             Father.__init_tag = True
             Father.f_ie_db = CreateDb('intelligent_event')
-            Father.f_stb_p_q = Publisher('zabbix_stability_queue')
+            Father.f_stb_p_q = InitQ('zabbix_stability_queue')
 
             ks = {
                 'tb_name': 'kind_map',
