@@ -28,5 +28,5 @@ class InitQ(object):
             if item:
                 fun(item[1])
 
-    def rush(self, data):
+    def rpush(self, data):
         self._connection.rpush(self._key, data)
