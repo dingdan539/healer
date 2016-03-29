@@ -4,7 +4,7 @@ import json
 from father import Father
 
 
-class AlertApi(Father):
+class WelcomeApi(Father):
     """master have the api_path"""
     api_path = ""
     error_msg = ""  # 提供给AuthMiddleware做判断，如果不为空，说明有错误，日志记录要记录进去
