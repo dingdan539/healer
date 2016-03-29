@@ -38,4 +38,3 @@ class TokenModule(ModuleFather):
             }
             data = self.__db.search(**kwargs)
             return data
-
