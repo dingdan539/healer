@@ -19,10 +19,11 @@ class AuthMiddleware(object):
         self._api_module = create('api')
         self._token_module = create('token')
         try:
-            tmp = req.access_route
-            if isinstance(tmp, list):
-                if len(tmp) > 0:
-                    self._from_ip = tmp[0]
+            pass
+            # tmp = req.access_route
+            # if isinstance(tmp, list):
+            #     if len(tmp) > 0:
+            #         self._from_ip = tmp[0]
         except Exception as e:
             print e
 
