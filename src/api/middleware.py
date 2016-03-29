@@ -32,7 +32,8 @@ class AuthMiddleware(object):
 
         token = req.get_param('token', default='')
         token_result = self._token_module.get_token(token)
-        token_result = token_result.get('data', '')
+        if token_result:
+            token_result = token_result['data']
 
         if not token_result:
             msg = "token is not found"
