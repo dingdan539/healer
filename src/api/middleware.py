@@ -11,7 +11,7 @@ class AuthMiddleware(object):
     """api 权限验证 待补充"""
     _api_module = None
     _token_module = None
-    _user_id = None
+    _user_id = 0
     _from_ip = ''
     _path = None
 
