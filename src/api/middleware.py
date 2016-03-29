@@ -37,10 +37,10 @@ class AuthMiddleware(object):
 
         if not token_result:
             msg = "token is not found"
-            self._api_module.insert_api_log(self._from_ip, self._path, '', date, msg)
+            self._api_module.insert_api_log(self._from_ip, self._path, 0, date, msg)
             raise falcon.HTTPBadRequest("error", msg, code=0)
         else:
-            self._user_id = token_result[0].get('id')
+            self._user_id = token_result[0].get('id', 0)
 
     def process_response(self, req, resp, resource):
         remark = resource.error_msg if (hasattr(resource, 'error_msg') and resource.error_msg) else json.dumps(req.params)
