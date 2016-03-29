@@ -18,17 +18,20 @@ class Intelligent_event(DeferredReflection, Base):
 class Alert_2016(Intelligent_event, father.Father):
     __tablename__ = 'alert_2016'
 
-class alert_2017(Intelligent_event, father.Father):
+class Alert_2017(Intelligent_event, father.Father):
     __tablename__ = 'alert_2017'
 
-class alert_2018(Intelligent_event, father.Father):
+class Alert_2018(Intelligent_event, father.Father):
     __tablename__ = 'alert_2018'
 
-class alert_2019(Intelligent_event, father.Father):
+class Alert_2019(Intelligent_event, father.Father):
     __tablename__ = 'alert_2019'
 
-class alert_2020(Intelligent_event, father.Father):
+class Alert_2020(Intelligent_event, father.Father):
     __tablename__ = 'alert_2020'
+
+class Api_log(Intelligent_event, father.Father):
+    __tablename__ = 'api_log'
 
 class Important_event(Intelligent_event, father.Father):
     __tablename__ = 'important_event'
@@ -47,6 +50,9 @@ class Source_map(Intelligent_event, father.Father):
 
 class Type_map(Intelligent_event, father.Father):
     __tablename__ = 'type_map'
+
+class User_token(Intelligent_event, father.Father):
+    __tablename__ = 'user_token'
 
 # ----------------------------------Asset-------------------------------------------
 

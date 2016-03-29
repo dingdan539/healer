@@ -1,17 +1,56 @@
+# -*- coding:utf-8 -*-
+import os
+import sys
+import copy
 import falcon
+from config import *
+from api.middleware import AuthMiddleware
+import function.basic as fb
+
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ROOT_PATH)
 
 
-class Resource(object):
+class Wsgi(object):
+    app = falcon.API(middleware=[AuthMiddleware()])
+    root_path = os.getcwd()
+    root_child_path = '/api'
+    root_api_path = os.getcwd() + root_child_path
+    api_files = []
 
-    def on_get(self, req, resp):
-        print resp
-        print req
-        """Handles GET requests"""
-        resp.status = falcon.HTTP_200  # This is the default status
-        resp.body = 'I will fuck you!'
+    def __init__(self):
+        self.api_files = fb.get_files(self.root_api_path, '_api.py')
 
-app = falcon.API()
+    def process(self):
+        if self.api_files:
+            config = load_config_auto()
+            profix = config.DOMAIN_PROFIX
+            for f in self.api_files:
+                f = f.split('.')[0]
+                m_path = "api."+f
 
-resource = Resource()
+                m = __import__(m_path, {}, {}, ['not None'])
+                f = f.split('_')
+                f_c = len(f)
+                f_name = ''
+                if f_c > 1:
+                    for i in range(0, f_c, 1):
+                        f_name += f[i].capitalize()
+                else:
+                    f_name = f_c[0].capitalize()
 
-app.add_route('/api', resource)
+                obj = getattr(m, f_name)()
+                self.app.add_route(profix + obj.api_path, obj)
+
+                def my_serializer(req, exception):
+                    """修改error的默认content-type类型"""
+                    exception = exception.to_json()
+                    return "application/json", exception
+                self.app.set_error_serializer(my_serializer)
+
+    def get_app(self):
+        self.process()
+        return self.app
+
+o = Wsgi()
+app = o.get_app()

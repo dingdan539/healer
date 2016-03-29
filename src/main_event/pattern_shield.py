@@ -16,7 +16,7 @@ class ShieldAll(Father, InterfaceShield):
         pool_id = warning_dict['pool_id']
         source_id = warning_dict['source_id']
 
-        sql = "select * from shield where %s between start_time and end_time" % (clock, )
+        sql = "select * from shield where enable = 0 and start_time <= %s and end_time >= %s" % (clock, clock)
 
         data = self.f_ie_db.execute(sql)
 

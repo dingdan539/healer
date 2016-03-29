@@ -5,6 +5,8 @@ class Config(object):
 
 
 class DevelConfig(Config):
+    DOMAIN_PROFIX = ''
+
     DB_SQLALCHEMY = 'mysql+mysqldb'
     DB_USER = 'root'
     DB_PWD = ''

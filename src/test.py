@@ -1,22 +1,11 @@
 # -*- coding:utf-8 -*-
+import datetime
+import time
+import function.basic as fb
+from function.class_method import create
 
-import sys
-import json
-from config import *
 
-if __name__ == "__main__":
-
-    config = load_config_auto()
-
-    ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-    sys.path.append(ROOT_PATH)
-
-    # from src.main_event.assemble import *
-    from src.common.redis import queue
-
-    cum = queue.InitQ('zabbix_event_queue')
-
-    def aa(stri):
-        print json.loads(stri)
-    print cum.blpop(aa)
+start_time = 99
+duration = 1
+end_time = start_time + (duration if duration else 3600)
+print end_time

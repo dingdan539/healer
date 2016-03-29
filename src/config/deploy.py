@@ -5,6 +5,8 @@ class Config(object):
 
 
 class DeployConfig(Config):
+    DOMAIN_PROFIX = '/healer'
+
     DB_SQLALCHEMY = 'mysql+mysqldb'
     DB_USER = 'opsdev'
     DB_PWD = 'opsdev_1haodian'

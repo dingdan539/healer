@@ -1,0 +1,7 @@
+falcon的request.py做了修改
+添加了行197，253，294-317
+
+healer框架使用规范
+src.api下 api文件以_api结尾 必须包含属性api_path、error_msg！
+src.config.db下，如果添加了新表，databases.py和models.py都要配！
+src.module下文件名必须_module.py结尾
