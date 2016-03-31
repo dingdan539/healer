@@ -7,9 +7,12 @@ from function.class_method import create
 
 
 class AlertApi(Father):
-    """master have the api_path"""
+    """Docstring for class Foo."""
+
+    #: Doc comment for class attribute Foo.bar.
+    #: It can have multiple lines.
     api_path = "/api/alert"
-    error_msg = ''  # 提供给AuthMiddleware做判断，如果不为空，说明有错误，日志记录要记录进去
+    error_msg = ''  #: 提供给AuthMiddleware做判断，如果不为空，说明有错误，日志记录要记录进去
 
     def on_post(self, req, resp):
         params = req.params
