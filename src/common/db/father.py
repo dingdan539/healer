@@ -25,7 +25,7 @@ class DbSqlalchemy(object):
         port = str(kwargs[prefix+'PORT'])
 
         uri = sqlalchemy + '://' + user + ':' + pwd + '@' + server + ':' + port + '/' + db_name + '?charset=utf8'
-        self.__engine = create_engine(uri, echo=debug)
+        self.__engine = create_engine(uri, pool_recycle=7200, echo=debug)  # pool_recycle避免超时，2小时连一次
         self.__session = scoped_session(sessionmaker(autocommit=True, bind=self.__engine))
 
     @property
