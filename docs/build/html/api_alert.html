@@ -136,6 +136,50 @@
             
   <div class="section" id="id1">
 <h1>报警接入<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<dl class="post">
+<dt id="post-http---oms.yihaodian.com.cn-healer-api-alert">
+<code class="descname">POST </code><code class="descname">http://oms.yihaodian.com.cn/healer/api/alert</code><a class="headerlink" href="#post-http---oms.yihaodian.com.cn-healer-api-alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>参数：</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ip</strong> &#8211; alarm&#8217;s ip</li>
+<li><strong>pool_id</strong> (<em>int</em>) &#8211; auto search by ip if null</li>
+<li><strong>site_id</strong> (<em>int</em>) &#8211; auto search by ip if null</li>
+<li><strong>description</strong> (<em>json</em>) &#8211; 报警内容</li>
+<li><strong>level_id</strong> (<em>int</em>) &#8211; 3-中间件层 4-应用层 5-业务层</li>
+<li><strong>source_id</strong> (<em>int</em>) &#8211; 1-zabbix 2-healthcheck ...</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    &quot;code&quot;: 1,
+    &quot;title&quot;: &quot;succ&quot;,
+    &quot;description&quot;: &quot;success&quot;
+}
+
+or
+
+HTTP/1.1 400 OK
+Content-Type: application/json
+
+{
+    &quot;code&quot;: 0,
+    &quot;title&quot;: &quot;error&quot;,
+    &quot;description&quot;: &quot;token is not found&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 

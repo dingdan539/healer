@@ -12,9 +12,9 @@
    :type site_id: int
    :param source_id: 1-zabbix 2-healthcheck ...
    :type source_id: int
-   :param key: description keyword
+   :param key: 关键字
    :type key: string
-   :param start_time: shiled start time eg:2015-12-23 23:11:01
+   :param start_time: 屏蔽开始时间 eg:2015-12-23 23:11:01
    :type key: string
    :param duration: 从start_time 开始持续多久（秒）。默认3600秒（1小时）
    :type duration: int
