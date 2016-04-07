@@ -15,32 +15,34 @@ class AuthMiddleware(object):
     _from_ip = ''
     _path = None
 
-    def process_request(self, req, resp):
+    def process_resource(self, req, resp, resource):
         self._api_module = create('api')
-        self._token_module = create('token')
-        try:
+        if hasattr(resource, 'no_auth') and resource.no_auth:
             pass
-            tmp = req.access_route
-            if isinstance(tmp, list):
-                if len(tmp) > 0:
-                    self._from_ip = tmp[0]
-        except Exception as e:
-            print e
-
-        self._path = req.path
-        date = int(time.time())
-
-        token = req.get_param('token', default='')
-        token_result = self._token_module.get_token(token)
-        if token_result:
-            token_result = token_result['data']
-
-        if not token_result:
-            msg = "token is not found"
-            self._api_module.insert_api_log(self._from_ip, self._path, 0, date, msg)
-            raise falcon.HTTPBadRequest("error", msg, code=0)
         else:
-            self._user_id = token_result[0].get('id', 0)
+            self._token_module = create('token')
+            try:
+                tmp = req.access_route
+                if isinstance(tmp, list):
+                    if len(tmp) > 0:
+                        self._from_ip = tmp[0]
+            except Exception as e:
+                print e
+
+            self._path = req.path
+            date = int(time.time())
+
+            token = req.get_param('token', default='')
+            token_result = self._token_module.get_token(token)
+            if token_result:
+                token_result = token_result['data']
+
+            if not token_result:
+                msg = "token is not found"
+                self._api_module.insert_api_log(self._from_ip, self._path, 0, date, msg)
+                raise falcon.HTTPBadRequest("error", msg, code=0)
+            else:
+                self._user_id = token_result[0].get('id', 0)
 
     def process_response(self, req, resp, resource):
         remark = resource.error_msg if (hasattr(resource, 'error_msg') and resource.error_msg) else json.dumps(req.params)

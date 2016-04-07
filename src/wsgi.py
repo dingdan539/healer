@@ -3,6 +3,7 @@ import os
 import sys
 import copy
 import falcon
+import route.docs_route as r_docs
 from config import *
 from api.middleware import AuthMiddleware
 import function.basic as fb
@@ -22,6 +23,7 @@ class Wsgi(object):
         self.api_files = fb.get_files(self.root_api_path, '_api.py')
 
     def process(self):
+        """api文件夹下的api初始化"""
         if self.api_files:
             config = load_config_auto()
             profix = config.DOMAIN_PROFIX
@@ -42,11 +44,17 @@ class Wsgi(object):
                 obj = getattr(m, f_name)()
                 self.app.add_route(profix + obj.api_path, obj)
 
-                def my_serializer(req, exception):
-                    """修改error的默认content-type类型"""
-                    exception = exception.to_json()
-                    return "application/json", exception
-                self.app.set_error_serializer(my_serializer)
+        def my_serializer(req, exception):
+            """修改error的默认content-type类型"""
+            exception = exception.to_json()
+            return "application/json", exception
+        self.app.set_error_serializer(my_serializer)
+        """
+            添加others路径
+        """
+        for i in [r_docs.Docs(), r_docs.DocsHtml(), r_docs.DocsResource(),
+                  r_docs.DocsJs(), r_docs.DocsCss(), r_docs.DocsFont()]:
+            self.app.add_route(profix + i.path, i)
 
     def get_app(self):
         self.process()

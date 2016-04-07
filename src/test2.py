@@ -2,6 +2,7 @@
 
 import sys
 import json
+import route.docs_route as r_docs
 from config import *
 
 if __name__ == "__main__":
@@ -18,7 +19,12 @@ if __name__ == "__main__":
     #
     # aa = "123"
     # print cum.rpush(aa)
-    import time
-    a = time.time()
-    print a
-    print int(a)
+    class A(object):
+        ss = 1
+
+    class B(A):
+        cc = 2
+
+    b = B()
+    print dir(b)
+
