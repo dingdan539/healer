@@ -6,9 +6,28 @@ import time
 
 
 class Main(Father):
+    reason_map = {
+        0: 'not found',
+        1: 'nc检测失败',
+        2: '虚拟机可能挂了',
+        3: '物理机可能挂了',
+        4: '交换机可能挂了',
+
+    }
+
+    def insert_db(self, warning_dict, reason_id=0, stderr=''):
+        warning_dict['remark'] = stderr
+        warning_dict['probably_id'] = reason_id
+        warning_dict['probably_reason'] = self.map.get(reason_id, '')
+        kwargs = {
+            'tb_name': 'important_event',
+            'field': warning_dict
+        }
+        self.f_ie_db.insert(**kwargs)
+
     def nc_check(self, warning_dict, ip, port, c_time=2):
         if not ip and not warning_dict['ip']:
-            return True
+            return False
         else:
             if not ip:
                 ip = warning_dict['ip']
@@ -23,13 +42,8 @@ class Main(Father):
                 time.sleep(0.1)
 
             if tag == 0:
-                warning_dict['remark'] = stderr
-                kwargs = {
-                    'tb_name': 'important_event',
-                    'field': warning_dict
-                }
-                res = self.f_ie_db.insert(**kwargs)
-            return True
+                return (1, stderr)
+            return False
 
 
 
@@ -53,7 +67,9 @@ class ProcessZabbixTomcat(Main, InterfaceOutPut):
         status = warning_dict['status']
         ip = warning_dict['ip']
         if (type_id == 4) and (status == 'PROBLEM'):
-            self.nc_check(warning_dict, ip, 8080, 3)
+            res = self.nc_check(warning_dict, ip, 8080, 3)
+            if res:
+                self.insert_db(warning_dict, res[0], res[1])
             return True
         else:
             return False
@@ -66,18 +82,7 @@ class ProcessZabbixSquidPort(Father, InterfaceOutPut):
         status = warning_dict['status']
         ip = warning_dict['ip']
         if (type_id == 11) and (status == 'PROBLEM'):
-            cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 80'''
-            code, stdout, stderr = fb.command(cmdstr)
-            if code == 1:
-                time.sleep(0.1)
-                code, stdout, stderr = fb.command(cmdstr)
-                if code == 1:
-                    warning_dict['remark'] = stderr
-                    kwargs = {
-                        'tb_name': 'important_event',
-                        'field': warning_dict
-                    }
-                    self.f_ie_db.insert(**kwargs)
+            self.nc_check(warning_dict, ip, 80, 3)
             return True
         else:
             return False

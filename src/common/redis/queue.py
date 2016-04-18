@@ -29,4 +29,4 @@ class InitQ(object):
                 fun(item[1])
 
     def rpush(self, data):
-        print self._connection.rpush(self._key, data)
+        return self._connection.rpush(self._key, data)
