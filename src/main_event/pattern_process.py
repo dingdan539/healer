@@ -18,7 +18,7 @@ class Main(Father):
     def insert_db(self, warning_dict, reason_id=0, stderr=''):
         warning_dict['remark'] = stderr
         warning_dict['probably_id'] = reason_id
-        warning_dict['probably_reason'] = self.map.get(reason_id, '')
+        warning_dict['probably_reason'] = self.reason_map.get(reason_id, '')
         kwargs = {
             'tb_name': 'important_event',
             'field': warning_dict
