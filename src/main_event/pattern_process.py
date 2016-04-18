@@ -13,10 +13,10 @@ class Main(Father):
             tag = 0
             for i in range(0, c_time):
 
-                cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 8080''' + str(port)
+                cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' ''' + str(port)
                 print cmdstr
                 code, stdout, stderr = fb.command(cmdstr)
-
+                print code, stdout, stderr
                 if code != 1:
                     tag = 1
                     break
@@ -28,7 +28,8 @@ class Main(Father):
                     'tb_name': 'important_event',
                     'field': warning_dict
                 }
-                self.f_ie_db.insert(**kwargs)
+                res = self.f_ie_db.insert(**kwargs)
+                print res
             return True
 
 
