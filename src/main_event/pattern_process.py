@@ -12,9 +12,11 @@ class Main(Father):
         else:
             tag = 0
             for i in range(0, c_time):
+
                 cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 8080''' + str(port)
-                code, stdout, stderr = fb.command(cmdstr)
                 print cmdstr
+                code, stdout, stderr = fb.command(cmdstr)
+
                 if code != 1:
                     tag = 1
                     break
