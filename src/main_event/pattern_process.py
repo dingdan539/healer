@@ -10,6 +10,8 @@ class Main(Father):
         if not ip and not warning_dict['ip']:
             return True
         else:
+            if not ip:
+                ip = warning_dict['ip']
             tag = 0
             for i in range(0, c_time):
 
