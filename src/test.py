@@ -1,11 +1,10 @@
 # -*- coding:utf-8 -*-
-import datetime
-import time
-import function.basic as fb
-from function.class_method import create
+import sys
+import os
+from src.main_event.pattern_process import *
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ROOT_PATH)
 
-
-start_time = 99
-duration = 1
-end_time = start_time + (duration if duration else 3600)
-print end_time
+warning_dict = {'ip': '10.4.11.82','description':'111'}
+a = Main()
+a.nc_check(warning_dict, '', 8080, 2)

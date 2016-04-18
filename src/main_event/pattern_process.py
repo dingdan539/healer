@@ -4,6 +4,32 @@ from pattern_father import *
 import src.function.basic as fb
 import time
 
+
+class Main(Father):
+    def nc_check(self, warning_dict, ip, port, c_time=2):
+        if not ip and not warning_dict['ip']:
+            return True
+        else:
+            tag = 0
+            for i in range(0, c_time):
+                cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' 8080''' + str(port)
+                code, stdout, stderr = fb.command(cmdstr)
+                if code != 1:
+                    tag = 1
+                    break
+                time.sleep(0.1)
+
+            if tag == 0:
+                warning_dict['remark'] = stderr
+                kwargs = {
+                    'tb_name': 'important_event',
+                    'field': warning_dict
+                }
+                self.f_ie_db.insert(**kwargs)
+            return True
+
+
+
 """所有类都必须是互斥的，满足一个不满足别的"""
 
 
