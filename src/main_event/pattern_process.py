@@ -97,7 +97,7 @@ class ProcessZabbixStandard(Main, InterfaceOutPut):
                     mod = create('server')
                     data = mod.search_server(ip)
                     if not data:
-                        data = [{'server_type_id': 0, 'parent_ip': '1.1.1.11'}]
+                        data = [{'server_type_id': 1, 'parent_ip': '1.1.1.11'}]
                     if data:
                         server_type_id = data[0].get('server_type_id', '')
                         parent_ip = data[0].get('parent_ip', '')
