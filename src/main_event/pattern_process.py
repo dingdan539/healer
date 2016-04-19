@@ -110,7 +110,7 @@ class ProcessZabbixStandard(Main, InterfaceOutPut):
                                 reason_id = 3
                                 stderr = ''
                         elif server_type_id == 1:
-                            reason_id = 4
+                            reason_id = 3
                             stderr = ''
                         else:
                             reason_id = res2[0]
