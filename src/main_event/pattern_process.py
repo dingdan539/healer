@@ -123,7 +123,7 @@ class ProcessZabbixStandard(Main, InterfaceOutPut):
                     stderr = res[1]
 
             if reason_id != 0:
-                self.insert_db(warning_dict, res[0], res[1])
+                self.insert_db(warning_dict, reason_id, stderr)
             return True
         else:
             return False
