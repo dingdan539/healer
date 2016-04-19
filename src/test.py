@@ -7,7 +7,10 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOT_PATH)
 
 from src.main_event.pattern_process import *
+from src.function.class_method import *
 from src.common.redis import queue
+
+
 
 cum = queue.InitQ('zabbix_event_queue')
 

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from interface import *
 from pattern_father import *
+from src.function.class_method import *
 import src.function.basic as fb
 import time
 
@@ -38,6 +39,12 @@ class Main(Father):
                 cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' ''' + str(port)
             elif style == 'ping':
                 reason_id = 2
+                cmdstr = r'''ping -c 1 -w 1 ''' + ip
+            elif style == 'virtual':
+                reason_id = 3
+                cmdstr = r'''ping -c 1 -w 1 ''' + ip
+            elif style == 'physical':
+                reason_id = 4
                 cmdstr = r'''ping -c 1 -w 1 ''' + ip
             else:
                 return False
@@ -81,10 +88,39 @@ class ProcessZabbixStandard(Main, InterfaceOutPut):
             elif type_id == 1:
                 port = 80
 
-            res = self.sys_check(warning_dict, ip, port, 3) or \
-                  self.sys_check(warning_dict, ip, port, 3, 'ping')
-
+            reason_id = 0
+            stderr = ''
+            res = self.sys_check(warning_dict, ip, port, 3)
             if res:
+                res2 = self.sys_check(warning_dict, ip, port, 3, 'ping')
+                if res2:
+                    mod = create('server')
+                    data = mod.search_server(ip)
+                    if data:
+                        server_type_id = data[0].get('server_type_id', '')
+                        parent_ip = data[0].get('parent_ip', '')
+                        if server_type_id == 0 and parent_ip:
+                            res3 = self.sys_check(warning_dict, parent_ip, port, 3, 'physical')
+                            if res3:
+                                reason_id = res3[0]
+                                stderr = res3[1]
+                            else:
+                                reason_id = 3
+                                stderr = ''
+                        elif server_type_id == 1:
+                            reason_id = 4
+                            stderr = ''
+                        else:
+                            reason_id = res2[0]
+                            stderr = res2[1]
+                    else:
+                        reason_id = res[0]
+                        stderr = res[1]
+                else:
+                    reason_id = res[0]
+                    stderr = res[1]
+
+            if reason_id != 0:
                 self.insert_db(warning_dict, res[0], res[1])
             return True
         else:

@@ -10,6 +10,20 @@ class ServerModule(ModuleFather):
         if not self.__db:
             self.__db = op.CreateDb('asset')
 
+    def search_server(self, ip=''):
+        if not ip:
+            return False
+        kwargs = {
+            'tb_name': 'server',
+            'field': [],
+            'where': {
+                'ip =': ip,
+                'server_status_id !=': 400
+            }
+        }
+        data = self.__db.search(**kwargs)['data']
+        return data
+
     def search_poolid_by_ip(self, ip):
         if not ip:
             return 0
