@@ -9,7 +9,7 @@ class Main(Father):
     reason_map = {
         0: 'not found',
         1: 'nc检测失败',
-        2: 'hc检测失败',
+        2: 'ping检测失败',
         3: '虚拟机可能挂了',
         4: '物理机可能挂了',
         5: '交换机可能挂了',
@@ -34,23 +34,22 @@ class Main(Father):
                 ip = warning_dict['ip']
             tag = 0
             if style == 'nc':
+                reason_id = 1
                 cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' ''' + str(port)
             elif style == 'ping':
-                cmdstr = r'''ping -c 1 ''' + ip
+                reason_id = 2
+                cmdstr = r'''ping -c 1 -w 1 ''' + ip
             else:
                 return False
             for i in range(0, c_time):
                 code, stdout, stderr = fb.command(cmdstr)
-                print '---------------', code
-                print '---------------', stdout
-                print '---------------', stderr
                 if code != 1:
                     tag = 1
                     break
                 time.sleep(0.1)
 
             if tag == 0:
-                return (1, stderr)
+                return (reason_id, stderr)
             return False
 
 
@@ -62,6 +61,31 @@ class ProcessZabbixFilter(Father, InterfaceOutPut):
     def process(self, warning_dict):
         kind_id = warning_dict['kind_id']
         if kind_id != 1:
+            return True
+        else:
+            return False
+
+
+class ProcessZabbixStandard(Main, InterfaceOutPut):
+    """必须有返回bool True - 执行并break False - 寻找下一个执行点"""
+    def process(self, warning_dict):
+        type_id = warning_dict['type_id']
+        status = warning_dict['status']
+        ip = warning_dict['ip']
+
+        port = 0
+        """与下面type_id对应：tomcat squid"""
+        if (status == 'PROBLEM') and (type_id in [4, 11]):
+            if type_id == 4:
+                port = 8080
+            elif type_id == 1:
+                port = 80
+
+            res = self.sys_check(warning_dict, ip, port, 3) or \
+                  self.sys_check(warning_dict, ip, port, 3, 'ping')
+
+            if res:
+                self.insert_db(warning_dict, res[0], res[1])
             return True
         else:
             return False

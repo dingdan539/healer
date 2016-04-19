@@ -27,8 +27,7 @@ class ZabbixAnalyse(object):
 
         # 以下只会分析可用性报警
         self.__container.set_process(ProcessZabbixFilter())
-        self.__container.set_process(ProcessZabbixTomcat())
-        self.__container.set_process(ProcessZabbixSquidPort())
+        self.__container.set_process(ProcessZabbixStandard())
         self.__container.set_process(ProcessDirect())
 
     def analyse(self, warning_dict):
