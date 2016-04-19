@@ -9,9 +9,10 @@ class Main(Father):
     reason_map = {
         0: 'not found',
         1: 'nc检测失败',
-        2: '虚拟机可能挂了',
-        3: '物理机可能挂了',
-        4: '交换机可能挂了',
+        2: 'hc检测失败',
+        3: '虚拟机可能挂了',
+        4: '物理机可能挂了',
+        5: '交换机可能挂了',
 
     }
 
@@ -25,16 +26,20 @@ class Main(Father):
         }
         self.f_ie_db.insert(**kwargs)
 
-    def nc_check(self, warning_dict, ip, port, c_time=2):
+    def sys_check(self, warning_dict, ip, port, c_time=2, style='nc'):
         if not ip and not warning_dict['ip']:
             return False
         else:
             if not ip:
                 ip = warning_dict['ip']
             tag = 0
-            for i in range(0, c_time):
-
+            if style == 'nc':
                 cmdstr = r'''nc -z -vv -w 1 ''' + ip + ''' ''' + str(port)
+            elif style == 'ping':
+                cmdstr = r'''ping -c 1 ''' + ip
+            else:
+                return False
+            for i in range(0, c_time):
                 code, stdout, stderr = fb.command(cmdstr)
                 if code != 1:
                     tag = 1
@@ -44,7 +49,6 @@ class Main(Father):
             if tag == 0:
                 return (1, stderr)
             return False
-
 
 
 """所有类都必须是互斥的，满足一个不满足别的"""
@@ -67,7 +71,7 @@ class ProcessZabbixTomcat(Main, InterfaceOutPut):
         status = warning_dict['status']
         ip = warning_dict['ip']
         if (type_id == 4) and (status == 'PROBLEM'):
-            res = self.nc_check(warning_dict, ip, 8080, 3)
+            res = self.sys_check(warning_dict, ip, 8080, 3)
             if res:
                 self.insert_db(warning_dict, res[0], res[1])
             return True
@@ -82,7 +86,9 @@ class ProcessZabbixSquidPort(Father, InterfaceOutPut):
         status = warning_dict['status']
         ip = warning_dict['ip']
         if (type_id == 11) and (status == 'PROBLEM'):
-            self.nc_check(warning_dict, ip, 80, 3)
+            res = self.sys_check(warning_dict, ip, 80, 3)
+            if res:
+                self.insert_db(warning_dict, res[0], res[1])
             return True
         else:
             return False
