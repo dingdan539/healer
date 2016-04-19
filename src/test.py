@@ -18,3 +18,5 @@ warning_dict = {'description':'10.4.11.82PROBLEM: tomcat port 8080','source_id':
 a = Main()
 res = a.sys_check(warning_dict, '10.17.26.185', 0, 2, 'ping')
 print res
+res = a.sys_check(warning_dict, '10.17.26.184', 0, 2, 'ping')
+print res

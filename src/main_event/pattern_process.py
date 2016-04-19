@@ -41,7 +41,9 @@ class Main(Father):
                 return False
             for i in range(0, c_time):
                 code, stdout, stderr = fb.command(cmdstr)
-                print code, stdout, stderr
+                print '---------------', code
+                print '---------------', stdout
+                print '---------------', stderr
                 if code != 1:
                     tag = 1
                     break
