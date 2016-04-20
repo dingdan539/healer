@@ -90,19 +90,17 @@ class ProcessZabbixStandard(Main, InterfaceOutPut):
 
             reason_id = 0
             stderr = ''
-            res = self.sys_check(warning_dict, ip, port, 3)
+            res = self.sys_check(warning_dict, ip, port, 2)
             if res:
-                res2 = self.sys_check(warning_dict, ip, port, 3, 'ping')
+                res2 = self.sys_check(warning_dict, ip, port, 2, 'ping')
                 if res2:
                     mod = create('server')
                     data = mod.search_server(ip)
-                    if not data:
-                        data = [{'server_type_id': 1, 'parent_ip': '1.1.1.11'}]
                     if data:
                         server_type_id = data[0].get('server_type_id', '')
                         parent_ip = data[0].get('parent_ip', '')
                         if server_type_id == 0 and parent_ip:
-                            res3 = self.sys_check(warning_dict, parent_ip, port, 3, 'physical')
+                            res3 = self.sys_check(warning_dict, parent_ip, port, 2, 'physical')
                             if res3:
                                 reason_id = res3[0]
                                 stderr = res3[1]
@@ -129,31 +127,45 @@ class ProcessZabbixStandard(Main, InterfaceOutPut):
             return False
 
 
-class ProcessZabbixTomcat(Main, InterfaceOutPut):
+class ProcessZabbixMachine(Main, InterfaceOutPut):
     """必须有返回bool True - 执行并break False - 寻找下一个执行点"""
     def process(self, warning_dict):
         type_id = warning_dict['type_id']
         status = warning_dict['status']
         ip = warning_dict['ip']
-        if (type_id == 4) and (status == 'PROBLEM'):
-            res = self.sys_check(warning_dict, ip, 8080, 3)
-            if res:
-                self.insert_db(warning_dict, res[0], res[1])
-            return True
-        else:
-            return False
 
+        if (status == 'PROBLEM') and (type_id in [9]):
+            reason_id = 0
+            stderr = ''
+            port = 0
 
-class ProcessZabbixSquidPort(Father, InterfaceOutPut):
-    """必须有返回bool True - 执行并break False - 寻找下一个执行点"""
-    def process(self, warning_dict):
-        type_id = warning_dict['type_id']
-        status = warning_dict['status']
-        ip = warning_dict['ip']
-        if (type_id == 11) and (status == 'PROBLEM'):
-            res = self.sys_check(warning_dict, ip, 80, 3)
-            if res:
-                self.insert_db(warning_dict, res[0], res[1])
+            res2 = self.sys_check(warning_dict, ip, port, 2, 'ping')
+            if res2:
+                mod = create('server')
+                data = mod.search_server(ip)
+                if data:
+                    server_type_id = data[0].get('server_type_id', '')
+                    parent_ip = data[0].get('parent_ip', '')
+                    if server_type_id == 0 and parent_ip:
+                        res3 = self.sys_check(warning_dict, parent_ip, port, 2, 'physical')
+                        if res3:
+                            reason_id = res3[0]
+                            stderr = res3[1]
+                        else:
+                            reason_id = 3
+                            stderr = ''
+                    elif server_type_id == 1:
+                        reason_id = 3
+                        stderr = ''
+                    else:
+                        reason_id = res2[0]
+                        stderr = res2[1]
+                else:
+                    reason_id = res2[0]
+                    stderr = res2[1]
+
+            if reason_id != 0:
+                self.insert_db(warning_dict, reason_id, stderr)
             return True
         else:
             return False
