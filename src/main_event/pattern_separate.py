@@ -29,6 +29,30 @@ class SeparateSitePool(Father, InterfaceSeparate):
         warning_dict['site_id'] = site_id
 
 
+class SeparateBasicInfo(Father, InterfaceSeparate):
+    """
+        this class must behind the SeparateZabbixIpStatus !
+    """
+    def separate(self, warning_dict):
+        ip = warning_dict['ip']
+        server_module = create('server')
+        data = server_module.search_server(ip)
+        if data:
+            try:
+                server_type_id = data[0].get('server_type_id', 0)
+                rack_id = data[0].get('rack_id', 0)
+            finally:
+                warning_dict['server_type_id'] = server_type_id
+                warning_dict['rack_id'] = rack_id
+
+        data = server_module.search_switch(ip)
+        if data:
+            try:
+                switch_ip = data[0].get('switch_ip', '')
+            finally:
+                warning_dict['switch_ip'] = switch_ip
+
+
 class SeparateType(Father, InterfaceSeparate):
     def separate(self, warning_dict):
         desc = warning_dict['description'][:80].lower()

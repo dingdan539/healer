@@ -24,6 +24,19 @@ class ServerModule(ModuleFather):
         data = self.__db.search(**kwargs)['data']
         return data
 
+    def search_switch(self, ip=''):
+        if not ip:
+            return False
+        kwargs = {
+            'tb_name': 'switch_server',
+            'field': [],
+            'where': {
+                'server_ip =': ip
+            }
+        }
+        data = self.__db.search(**kwargs)['data']
+        return data
+
     def search_poolid_by_ip(self, ip):
         if not ip:
             return 0

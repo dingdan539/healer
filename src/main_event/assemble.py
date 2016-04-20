@@ -18,6 +18,7 @@ class ZabbixAnalyse(object):
         self.__container = Container()
         self.__container.set_separate(SeparateZabbixIpStatus())
         self.__container.set_separate(SeparateSitePool())
+        self.__container.set_separate(SeparateBasicInfo())
         self.__container.set_separate(SeparateType())
 
         self.__container.set_shield(ShieldAll())

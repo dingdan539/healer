@@ -71,3 +71,6 @@ class App(Asset, father.Father):
 
 class Site(Asset, father.Father):
     __tablename__ = 'site'
+
+class Switch_server(Asset, father.Father):
+    __tablename__ = 'switch_server'

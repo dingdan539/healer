@@ -8,6 +8,6 @@ dbmaps = {
     },
     'asset': {
         'prefix': 'DB_',
-        'tables': ['server', 'app', 'site']
+        'tables': ['server', 'app', 'site', 'switch_server']
     }
 }
